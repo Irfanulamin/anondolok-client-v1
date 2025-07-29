@@ -49,7 +49,7 @@ export default function PaymentsTable() {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          "http://localhost:5000/api/admin-payment/total-payments"
+          "https://anondolok-backend-v1.vercel.app/api/admin-payment/total-payments"
         );
         const data = await res.json();
         setDataSet(data); // Do something with the data

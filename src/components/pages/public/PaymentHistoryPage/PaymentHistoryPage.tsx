@@ -19,7 +19,7 @@ export default function History() {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/payment/payment-history/${username}`
+          `https://anondolok-backend-v1.vercel.app/api/payment/payment-history/${username}`
         );
         const result = await res.json();
         setData(result);

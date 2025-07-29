@@ -38,7 +38,7 @@ export const LoginPage = () => {
             onSubmit={async (values, { setSubmitting }) => {
               try {
                 const response = await fetch(
-                  "http://localhost:5000/api/auth/login",
+                  "https://anondolok-backend-v1.vercel.app/api/auth/login",
                   {
                     method: "POST",
                     headers: {

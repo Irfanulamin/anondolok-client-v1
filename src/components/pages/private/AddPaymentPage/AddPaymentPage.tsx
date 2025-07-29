@@ -65,7 +65,7 @@ export default function AddDepositForm() {
     };
     try {
       const response = await fetch(
-        "http://localhost:5000/api/payment/make-payment",
+        "https://anondolok-backend-v1.vercel.app/api/payment/make-payment",
         {
           method: "POST",
           headers: {

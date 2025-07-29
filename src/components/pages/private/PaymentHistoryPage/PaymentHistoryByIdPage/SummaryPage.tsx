@@ -33,7 +33,7 @@ const PaymentSummaryByYear: React.FC<Props> = ({ username }) => {
     const fetchYearlyAnalytics = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/admin-payment/yearly-wise/${username}`
+          `https://anondolok-backend-v1.vercel.app/api/admin-payment/yearly-wise/${username}`
         );
         const data = await res.json();
 
