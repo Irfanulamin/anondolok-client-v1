@@ -1,167 +1,111 @@
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Users, Target, Heart, Award } from "lucide-react";
 import Image from "next/image";
 
-export default function AboutUsPage() {
+export default function AboutUs() {
   return (
-    <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <section className="py-20 px-4 text-center bg-gradient-to-b from-muted/50 to-background">
-        <div className="max-w-4xl mx-auto">
-          <Badge variant="secondary" className="mb-4">
-            About Our Company
-          </Badge>
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
-            We're building the future of innovation
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation.
-          </p>
-        </div>
-      </section>
+    <div className="bg-white py-12 px-6 md:px-16 max-w-6xl mx-auto my-44">
+      {/* Header */}
+      <div className="flex flex-col items-center text-center mb-12">
+        <Image
+          src="/logo.png"
+          alt="Anondolok Logo"
+          width={120}
+          height={120}
+          className="mb-4"
+        />
+        <h1 className="text-4xl font-bold text-gray-800 mb-2">আনন্দলোক</h1>
+        <p className="text-lg text-gray-600 max-w-2xl">
+          এক্স-আইইআরিয়ান কো-অপারেটিভ সোসাইটি। আমাদের লক্ষ্য সদস্যদের আর্থিক ও
+          সামাজিক উন্নয়নের মাধ্যমে একটি সহযোগিতামূলক সমাজ গঠন।
+        </p>
+      </div>
 
-      {/* Main Image Section */}
-      <section className="py-16 px-4 flex justify-center items-center bg-muted/20">
-        <div className="max-w-6xl mx-auto">
-          <Image
-            src="/logo.png"
-            alt="Our team working together"
-            width={400}
-            height={200}
-            className="w-[200px] h-full  "
-          />
-        </div>
-      </section>
+      {/* Vision & Mission */}
+      <div className="mb-10">
+        <h2 className="text-2xl font-semibold text-indigo-700 mb-2">
+          আমাদের লক্ষ্য
+        </h2>
+        <p className="text-gray-700 leading-relaxed">
+          আনন্দলোক একটি অরাজনৈতিক, অলাভজনক এবং গণতান্ত্রিক সহযোগিতা ভিত্তিক
+          প্রতিষ্ঠান। এর মূল উদ্দেশ্য হলো:
+        </p>
+        <ul className="list-disc ml-6 mt-2 text-gray-700 space-y-1">
+          <li>সদস্যদের নিয়মিত সঞ্চয় নিশ্চিত করা</li>
+          <li>সঞ্চিত অর্থ লাভজনক খাতে বিনিয়োগ</li>
+          <li>সামাজিক ও কল্যাণমূলক প্রকল্পে সক্রিয় অংশগ্রহণ</li>
+          <li>সমষ্টিগত পরিকল্পনা গ্রহণ ও বাস্তবায়ন</li>
+        </ul>
+      </div>
 
-      {/* Story Section */}
-      <section className="py-16 px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl font-bold mb-6">Our Story</h2>
-              <p className="text-muted-foreground mb-4 leading-relaxed">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
-              </p>
-              <p className="text-muted-foreground mb-6 leading-relaxed">
-                Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                cupidatat non proident, sunt in culpa qui officia deserunt
-                mollit anim id est laborum.
-              </p>
-              <Button>Learn More</Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Membership */}
+      <div className="mb-10">
+        <h2 className="text-2xl font-semibold text-indigo-700 mb-2">সদস্যপদ</h2>
+        <p className="text-gray-700 leading-relaxed">
+          শুধুমাত্র ঢাকা বিশ্ববিদ্যালয়ের ইনস্টিটিউট অব এডুকেশন অ্যান্ড রিসার্চ
+          (IER) থেকে স্নাতক প্রাপ্তরা এই সংগঠনের সদস্য হতে পারেন। সদস্য সংখ্যা
+          সর্বাধিক ৫০ জন। সদস্য হওয়ার জন্য প্রাথমিক সঞ্চয় ও মাসিক সঞ্চয়
+          বাধ্যতামূলক।
+        </p>
+        <p className="mt-2 text-gray-700">
+          সময়মতো সঞ্চয় প্রদান না করলে জরিমানা আরোপ করা হয় এবং নির্দিষ্ট শর্তে
+          সদস্যপদ বাতিলের ব্যবস্থাও আছে।
+        </p>
+      </div>
 
-      {/* Stats Section */}
-      <section className="py-16 px-4 bg-muted/30">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">By the Numbers</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="text-4xl font-bold text-primary mb-2">500+</div>
-              <div className="text-sm text-muted-foreground">Happy Clients</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-primary mb-2">1000+</div>
-              <div className="text-sm text-muted-foreground">
-                Projects Completed
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-primary mb-2">50+</div>
-              <div className="text-sm text-muted-foreground">Team Members</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-primary mb-2">5+</div>
-              <div className="text-sm text-muted-foreground">
-                Years Experience
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Committee Structure */}
+      <div className="mb-10">
+        <h2 className="text-2xl font-semibold text-indigo-700 mb-2">
+          পরিচালনা কমিটি
+        </h2>
+        <p className="text-gray-700 leading-relaxed">
+          আনন্দলোক পরিচালনা করে একটি ৫ সদস্য বিশিষ্ট কমিটি। তারা প্রতি দুই বছর
+          অন্তর নির্বাচিত হন। সদস্যরা হলেন:
+        </p>
+        <ul className="list-disc ml-6 mt-2 text-gray-700 space-y-1">
+          <li>সভাপতি</li>
+          <li>সহ-সভাপতি</li>
+          <li>কোষাধ্যক্ষ</li>
+          <li>দপ্তর সম্পাদক</li>
+          <li>প্রচার সম্পাদক</li>
+        </ul>
+        <p className="mt-2 text-gray-700">
+          এই কমিটি সঞ্চয় ব্যবস্থাপনা, ঋণ প্রদান, বার্ষিক সভা এবং নীতিনির্ধারণী
+          সিদ্ধান্ত গ্রহণে জবাবদিহিতার সাথে কাজ করে।
+        </p>
+      </div>
 
-      {/* Team Section */}
-      <section className="py-16 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Meet Our Team</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* Financial Policy */}
+      <div className="mb-10">
+        <h2 className="text-2xl font-semibold text-indigo-700 mb-2">
+          অর্থনীতি ও বিনিয়োগ
+        </h2>
+        <p className="text-gray-700 leading-relaxed">
+          সদস্যদের জমাকৃত অর্থ একটি নির্দিষ্ট ব্যাংক অ্যাকাউন্টে রাখা হয় এবং
+          প্রয়োজনে সদস্যদের মাঝে ঋণ হিসেবে প্রদান করা হয়। এছাড়াও লাভজনক
+          প্রকল্পে বিনিয়োগের মাধ্যমে সংগঠনের তহবিলকে শক্তিশালী করা হয়।
+        </p>
+      </div>
 
-      {/* Company Culture */}
-      <section className="py-16 px-4 bg-muted/30">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-6">Our Culture</h2>
-          <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur.
-          </p>
-          <div className="grid md:grid-cols-3 gap-6 mb-8">
-            <div className="flex flex-col items-center p-6">
-              <Award className="w-12 h-12 text-primary mb-4" />
-              <h3 className="font-semibold mb-2">Excellence</h3>
-              <p className="text-sm text-muted-foreground text-center">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              </p>
-            </div>
-            <div className="flex flex-col items-center p-6">
-              <Users className="w-12 h-12 text-primary mb-4" />
-              <h3 className="font-semibold mb-2">Collaboration</h3>
-              <p className="text-sm text-muted-foreground text-center">
-                Sed do eiusmod tempor incididunt ut labore et dolore magna.
-              </p>
-            </div>
-            <div className="flex flex-col items-center p-6">
-              <Heart className="w-12 h-12 text-primary mb-4" />
-              <h3 className="font-semibold mb-2">Passion</h3>
-              <p className="text-sm text-muted-foreground text-center">
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Annual Meeting */}
+      <div className="mb-10">
+        <h2 className="text-2xl font-semibold text-indigo-700 mb-2">
+          বার্ষিক সাধারন সভা
+        </h2>
+        <p className="text-gray-700 leading-relaxed">
+          প্রতি বছর একটি বার্ষিক সাধারণ সভা (AGM) অনুষ্ঠিত হয় যেখানে সদস্যদের
+          মতামত গ্রহণ, প্রতিবেদন উপস্থাপন এবং পরবর্তী বছরের পরিকল্পনা নির্ধারণ
+          করা হয়। উপস্থিতির জন্য সকল সদস্যের অংশগ্রহণ গুরুত্বপূর্ণ।
+        </p>
+      </div>
 
-      {/* Call to Action */}
-      <section className="py-20 px-4 text-center">
-        <div className="max-w-2xl mx-auto">
-          <h2 className="text-3xl font-bold mb-4">Ready to Work With Us?</h2>
-          <p className="text-muted-foreground mb-8 leading-relaxed">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg">Get Started</Button>
-            <Button variant="outline" size="lg">
-              Contact Us
-            </Button>
-          </div>
-        </div>
-      </section>
+      {/* Contact / Social */}
+      <div>
+        <h2 className="text-2xl font-semibold text-indigo-700 mb-2">যোগাযোগ</h2>
+        <p className="text-gray-700 leading-relaxed">
+          আনন্দলোক এর সমস্ত তথ্য একটি রেজিস্টার ও ফেসবুক গ্রুপে সংরক্ষিত থাকে।
+          সদস্যদের মধ্যে মতবিনিময়, নোটিশ, আর্থিক বিবরণ এবং পরিকল্পনার তথ্য
+          এখানে প্রকাশিত হয়।
+        </p>
+      </div>
     </div>
   );
 }

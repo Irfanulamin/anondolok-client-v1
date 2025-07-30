@@ -22,6 +22,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { Badge } from "@/components/ui/badge";
 
 interface User {
   _id: string;
@@ -152,6 +153,9 @@ export default function DashboardPage() {
     <div className="flex flex-col  w-full mt-16 mb-16 px-4">
       <h1 className="text-2xl font-bold mb-6">Members Management</h1>
       <div className="flex justify-end gap-4">
+        <Button className="bg-black text-white mb-4 font-semibold text-base">
+          {users.length} Members
+        </Button>
         <Button
           variant="outline"
           className="mb-4"
@@ -159,6 +163,7 @@ export default function DashboardPage() {
         >
           <RefreshCcw /> Refresh Users
         </Button>
+
         <Sheet>
           <SheetTrigger asChild>
             <Button variant="outline" className="mb-4">
