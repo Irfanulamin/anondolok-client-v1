@@ -50,6 +50,8 @@ export default function AnnualPaymentAnalysis({
 }) {
   const [yearlySummaries, setYearlySummaries] = useState<YearlySummary[]>([]);
   useEffect(() => {
+    if (!payments || payments.length === 0) return;
+
     const yearlyMap = new Map<string, YearlySummary>();
 
     payments.forEach((payment) => {
