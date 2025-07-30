@@ -26,6 +26,8 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import ArchivedPaymentHistoryPage from "../ArchivedPaymentHistoryPage/ArchivedPaymentHistoryPage";
+import YearlyPayments from "./ArchivedPayment/ArchivedPaymentPage";
 
 const monthNames = [
   "January",
@@ -96,7 +98,7 @@ export default function PaymentsTable() {
               className="border-none shadow-none bg-amber-600/20"
             >
               <Collapsible
-                open={openSections[year] ?? true}
+                open={openSections[year] ?? false}
                 onOpenChange={() => toggleSection(year)}
               >
                 <CollapsibleTrigger asChild>
@@ -238,6 +240,7 @@ export default function PaymentsTable() {
               </Collapsible>
             </Card>
           ))}
+        <YearlyPayments />
       </div>
     </div>
   );

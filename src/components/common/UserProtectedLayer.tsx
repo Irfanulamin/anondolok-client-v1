@@ -12,7 +12,7 @@ const UserProtectedLayout = ({ children }: { children: React.ReactNode }) => {
     if (role === null || role === undefined) {
       router.push("/");
     } else if (role === "admin") {
-      router.push("/dashboard");
+      router.push("/members-management");
     }
   }, [role, router]);
 

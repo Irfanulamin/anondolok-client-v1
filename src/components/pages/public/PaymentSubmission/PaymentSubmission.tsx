@@ -104,29 +104,6 @@ export default function MemberDepositForm() {
               parseFloat(values.othersAmount || "0") > 0;
             return (
               <Form className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md space-y-6 border border-gray-200">
-                {/* Member Name */}
-                <div className="flex items-center space-x-4">
-                  <label
-                    htmlFor="memberName"
-                    className="w-40 text-gray-700 font-semibold"
-                  >
-                    Member Name
-                  </label>
-                  <div className="flex-1">
-                    <Field
-                      id="memberName"
-                      name="memberName"
-                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400"
-                      placeholder="Enter member name"
-                    />
-                    <ErrorMessage
-                      name="memberName"
-                      component="div"
-                      className="text-red-600 text-sm mt-1"
-                    />
-                  </div>
-                </div>
-
                 {/* Member ID */}
                 <div className="flex items-center space-x-4">
                   <label
@@ -145,6 +122,28 @@ export default function MemberDepositForm() {
                     />
                     <ErrorMessage
                       name="memberId"
+                      component="div"
+                      className="text-red-600 text-sm mt-1"
+                    />
+                  </div>
+                </div>
+                {/* Member Name */}
+                <div className="flex items-center space-x-4">
+                  <label
+                    htmlFor="memberName"
+                    className="w-40 text-gray-700 font-semibold"
+                  >
+                    Member Name
+                  </label>
+                  <div className="flex-1">
+                    <Field
+                      id="memberName"
+                      name="memberName"
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400"
+                      placeholder="Enter member name"
+                    />
+                    <ErrorMessage
+                      name="memberName"
                       component="div"
                       className="text-red-600 text-sm mt-1"
                     />

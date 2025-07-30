@@ -150,7 +150,7 @@ export default function DashboardPage() {
 
   return (
     <div className="flex flex-col  w-full mt-16 mb-16 px-4">
-      <h1 className="text-2xl font-bold mb-6">Users Management</h1>
+      <h1 className="text-2xl font-bold mb-6">Members Management</h1>
       <div className="flex justify-end gap-4">
         <Button
           variant="outline"

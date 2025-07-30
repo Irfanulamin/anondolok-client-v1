@@ -25,6 +25,9 @@ import * as Yup from "yup";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import PaymentSummaryByYear from "./SummaryPage";
+import ArchivedPayment from "../ArchivedPayment/ArchivedPaymentPage";
+import ArchivePaymentSummaryByYear from "./ArchivePage";
+import AnnualPaymentAnalysis from "./SummaryPage";
 
 type Payment = {
   _id: string;
@@ -124,10 +127,10 @@ const PaymentHistoryByIdPage = ({ id }: { id: string }) => {
       othersComment: payment.othersComment || "",
     });
   };
-
+  console.log(payments);
   return (
-    <div className="w-full mt-6 md:mt-12 lg:mt-24">
-      <PaymentSummaryByYear username={id} />
+    <div className="w-full mt-6 md:mt-12 lg:mt-32">
+      <AnnualPaymentAnalysis data={payments} />
       <header className="mb-4">
         <h2 className="text-2xl font-semibold">
           Payment History of <span className="uppercase">{id}</span>
@@ -325,6 +328,8 @@ const PaymentHistoryByIdPage = ({ id }: { id: string }) => {
           </Table>
         </div>
       </div>
+
+      <ArchivePaymentSummaryByYear username={id} />
     </div>
   );
 };

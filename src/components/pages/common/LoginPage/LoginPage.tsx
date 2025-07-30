@@ -64,7 +64,7 @@ export const LoginPage = () => {
                 if (result?.user?.role === "user") {
                   router.push("/payment-submission");
                 } else if (result?.user?.role === "admin") {
-                  router.push("/dashboard");
+                  router.push("/members-management");
                 }
               } catch (error) {
                 console.error("Login Error:", error);

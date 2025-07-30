@@ -58,9 +58,10 @@ export function DataTable({ data }: DataTableProps) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead rowSpan={2} className="sticky left-0 bg-background z-10">
-              Name
-            </TableHead>
+            <TableHead
+              rowSpan={2}
+              className="sticky left-0 bg-background z-10"
+            ></TableHead>
             <TableHead colSpan={5} className="text-center border-l border-r">
               Periodical Deposits
             </TableHead>
@@ -87,8 +88,8 @@ export function DataTable({ data }: DataTableProps) {
         <TableBody>
           {data.map((row, index) => (
             <TableRow key={index}>
-              <TableCell className="font-medium sticky left-0 bg-background z-10">
-                {row.Name}
+              <TableCell className="font-medium sticky left-0  z-10 bg-slate-800 text-white">
+                <span className="">{row.Name}</span>
               </TableCell>
               {periodicalDepositHeaders.map((header) => (
                 <TableCell key={header} className="text-right">

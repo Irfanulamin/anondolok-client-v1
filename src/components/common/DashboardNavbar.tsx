@@ -1,16 +1,20 @@
 "use client";
 import { logOut } from "@/redux/feature/authSlice";
 import { useAppDispatch } from "@/redux/hook";
+import { AlignJustify } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 export default function DashboardNavbar() {
   const [open, setOpen] = useState(false);
   const dispatch = useAppDispatch();
+  const pathname = usePathname();
+
   const navLinks = [
-    { to: "/dashboard", label: "Dashboard" },
+    { to: "/members-management", label: "Member Management" },
     { to: "/archived-payment", label: "Archived Payment" },
-    { to: `/payments-history`, label: "Payment History" },
+    { to: "/payments-history", label: "Payment History" },
     { to: "/add-payment", label: "Make A Deposit" },
   ];
 
@@ -30,31 +34,36 @@ export default function DashboardNavbar() {
           aria-label="Toggle navigation"
           onClick={() => setOpen((v) => !v)}
         >
-          <span className="block h-1 bg-gray-800 rounded transition-all"></span>
-          <span className="block h-1 bg-gray-800 rounded transition-all"></span>
-          <span className="block h-1 bg-gray-800 rounded transition-all"></span>
+          <AlignJustify size={16} className="w-6 h-6 text-white" />
         </button>
         <div
-          className={` flex-col md:flex-row md:flex gap-4 absolute md:static top-full left-0 right-0 pt-6 md:pt-0 bg-white md:bg-transparent md:border-0 z-10 transition-all ${
+          className={`flex-col md:flex-row md:flex gap-4 absolute md:static top-full left-0 right-0 pt-6 md:pt-0 bg-sky-900 md:bg-transparent md:border-0 z-10 transition-all ${
             open ? "flex" : "hidden"
           } md:items-center`}
         >
-          {navLinks.map((link) => (
-            <Link
-              key={link.to}
-              href={link.to}
-              className="block px-4  md:p-0 text-base text-sky-100 font-medium hover:text-sky-200 transition-colors"
-              onClick={() => setOpen(false)}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = pathname.startsWith(link.to); // More flexible matching
+            return (
+              <Link
+                key={link.to}
+                href={link.to}
+                className={`block px-4 md:p-0 text-base font-medium transition-colors ${
+                  isActive
+                    ? "text-white underline underline-offset-4"
+                    : "text-sky-100 hover:text-sky-200"
+                }`}
+                onClick={() => setOpen(false)}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
           <button
             onClick={() => {
               handleLogout();
               setOpen(false);
             }}
-            className="block px-3 py-3 md:py-0.5 rounded-lg text-base  text-red-600 font-medium hover:text-red-800 transition-colors bg-red-100"
+            className="block px-3 py-3 md:py-0.5 rounded-lg text-base text-red-600 font-medium hover:text-red-800 transition-colors bg-red-100"
           >
             Logout
           </button>

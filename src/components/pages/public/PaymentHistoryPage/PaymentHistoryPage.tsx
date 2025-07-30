@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/table";
 import { useAppSelector } from "@/redux/hook";
 import { useEffect, useState } from "react";
+import ArchivePaymentSummaryByYear from "../../private/PaymentHistoryPage/PaymentHistoryByIdPage/ArchivePage";
+import AnnualPaymentAnalysis from "./YearlyHistory";
 
 export default function History() {
   const { username } = useAppSelector((state) => state.auth);
@@ -34,8 +36,11 @@ export default function History() {
   }, [username]);
   return (
     <div className="w-full mt-12 md:mt-24 lg:mt-32">
-      <header className="mb-4">
-        <h2 className="text-lg font-semibold">Payment History</h2>
+      <AnnualPaymentAnalysis payments={data?.payments} />
+      <header className="my-4">
+        <h2 className="text-2xl font-semibold mb-4 text-gray-800">
+          Payment History
+        </h2>
       </header>
       <div className="w-full overflow-x-auto mb-6   rounded-2xl">
         <div className="min-w-full inline-block align-middle">
@@ -59,8 +64,15 @@ export default function History() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data?.payments.map((payment: any) => (
-                <TableRow key={payment._id}>
+              {data?.payments.map((payment: any, idx: number) => (
+                <TableRow
+                  key={payment._id}
+                  className={`${
+                    idx % 2
+                      ? "hover:bg-sky-100/10 bg-sky-200/50"
+                      : "hover:bg-sky-200/10 bg-sky-300/50"
+                  }`}
+                >
                   <TableCell className="font-medium w-24">
                     {payment.memberId}
                   </TableCell>
@@ -111,6 +123,7 @@ export default function History() {
           </Table>
         </div>
       </div>
+      <ArchivePaymentSummaryByYear username={username} />
     </div>
   );
 }
