@@ -19,13 +19,10 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Edit2Icon } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import PaymentSummaryByYear from "./SummaryPage";
-import ArchivedPayment from "../ArchivedPayment/ArchivedPaymentPage";
 import ArchivePaymentSummaryByYear from "./ArchivePage";
 import AnnualPaymentAnalysis from "./SummaryPage";
 
@@ -39,7 +36,7 @@ type Payment = {
   othersAmount: number;
   othersComment?: string;
   totalAmount: number;
-  createdAt: string;
+  dateOfDeposit: string;
 };
 
 const PaymentHistoryByIdPage = ({ id }: { id: string }) => {
@@ -162,11 +159,14 @@ const PaymentHistoryByIdPage = ({ id }: { id: string }) => {
                   }`}
                 >
                   <TableCell className="text-left">
-                    {new Date(payment.createdAt).toLocaleDateString("en-US", {
-                      day: "numeric",
-                      month: "long",
-                      year: "numeric",
-                    })}
+                    {new Date(payment.dateOfDeposit).toLocaleDateString(
+                      "en-US",
+                      {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      }
+                    )}
                   </TableCell>
                   <TableCell>
                     <div className="font-medium">{payment.memberName}</div>

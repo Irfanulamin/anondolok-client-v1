@@ -91,10 +91,7 @@ export default function YearlyPayments() {
                   <div className="bg-amber-950 px-2 py-1 rounded-lg">
                     <span className="font-semibold text-white">
                       {"Total: "}
-                      {yearData.total_amount.toLocaleString("en-US", {
-                        style: "currency",
-                        currency: "USD",
-                      })}
+                      {yearData.total_amount.toLocaleString("en-US")}
                       &#2547;
                     </span>
                   </div>
@@ -132,10 +129,7 @@ export default function YearlyPayments() {
                           <TableCell>{payment.username}</TableCell>
                           <TableCell className="text-right">
                             <span className="text-amber-950 text-base font-medium">
-                              {payment.amount.toLocaleString("en-US", {
-                                style: "currency",
-                                currency: "USD",
-                              })}
+                              {payment.amount.toLocaleString("en-US")}
                               &#2547;
                             </span>
                           </TableCell>

@@ -88,7 +88,7 @@ export default function MemberDepositForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4 my-24 md:my-0">
       <div className="w-full max-w-2xl space-y-6">
         <h2 className="text-2xl font-bold mb-4">
           Member's Deposit Submission Form

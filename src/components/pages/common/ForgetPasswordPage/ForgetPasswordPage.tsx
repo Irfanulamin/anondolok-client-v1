@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Loader2, ArrowLeft, Mail } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type FormData = {
   email: string;
@@ -25,6 +26,7 @@ export default function ForgotPasswordPage() {
 
     return errors;
   };
+  const router = useRouter();
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
@@ -37,14 +39,42 @@ export default function ForgotPasswordPage() {
           <Formik
             initialValues={{ email: "" }}
             validate={validate}
-            onSubmit={async (values) => {
-              console.log(values);
+            onSubmit={async (values, { setSubmitting }) => {
               setLoading(true);
-              setServerMsg("If the email exists, a code has been sent.");
-              setTimeout(() => {
-                setCodeSent(true);
+              setServerMsg(""); // Clear previous messages
+
+              try {
+                const res = await fetch(
+                  "https://anondolok-backend-v1.vercel.app/api/auth/forgot-password",
+                  {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ email: values.email }),
+                  }
+                );
+
+                const data = await res.json();
+                console.log(data);
+                if (
+                  data.success &&
+                  data.message === "Reset code sent to your email"
+                ) {
+                  localStorage.setItem("resetEmail", values.email);
+                  setServerMsg(data.message);
+                  setCodeSent(true);
+                  router.push("/reset-password");
+                } else {
+                  setServerMsg(data.message || "Something went wrong.");
+                }
+              } catch (error) {
+                console.error("Error:", error);
+                setServerMsg("Failed to send request. Please try again.");
+              } finally {
                 setLoading(false);
-              }, 1000);
+                setSubmitting(false);
+              }
             }}
           >
             <Form className="space-y-4">

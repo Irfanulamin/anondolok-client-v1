@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, CheckCircle, Loader2 } from "lucide-react";
@@ -15,12 +15,21 @@ export default function ResetPasswordPage() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [initialEmail, setInitialEmail] = useState("");
+  const [initialEmail, setInitialEmail] = useState<string | null>(null);
   const router = useRouter();
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Read resetEmail from localStorage on client side only
   useEffect(() => {
-    const resetEmail = localStorage.getItem("resetEmail");
-    if (resetEmail) setInitialEmail(resetEmail);
+    const email = localStorage.getItem("resetEmail");
+    setInitialEmail(email);
+  }, []);
+
+  // Clear redirect timeout if component unmounts early
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
   }, []);
 
   const validate = (values: FormValues) => {
@@ -68,6 +77,15 @@ export default function ResetPasswordPage() {
     );
   }
 
+  // Wait for email to be loaded from localStorage before showing form
+  if (initialEmail === null) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-gray-500" />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-12">
       <div className="w-full max-w-md bg-white p-6 rounded-lg shadow space-y-4">
@@ -82,9 +100,9 @@ export default function ResetPasswordPage() {
             code: "",
             newPassword: "",
           }}
+          enableReinitialize
           validate={validate}
           onSubmit={async (values, { setErrors }) => {
-            console.log(values);
             setLoading(true);
             try {
               const res = await fetch(
@@ -95,12 +113,25 @@ export default function ResetPasswordPage() {
                   body: JSON.stringify(values),
                 }
               );
+
+              // Check if status is not OK
+              if (!res.ok) {
+                const errorResult = await res.json().catch(() => null);
+                setErrors({
+                  newPassword:
+                    errorResult?.message ||
+                    `Server error: ${res.status} ${res.statusText}`,
+                });
+                setLoading(false);
+                return;
+              }
+
               const result = await res.json();
 
               if (result.success) {
                 setSuccess(true);
                 localStorage.removeItem("resetEmail");
-                setTimeout(() => router.push("/"), 3000);
+                timeoutRef.current = setTimeout(() => router.push("/"), 3000);
               } else if (result.errors) {
                 setErrors(result.errors as any);
               } else {
@@ -115,7 +146,7 @@ export default function ResetPasswordPage() {
             }
           }}
         >
-          {({ values }) => (
+          {() => (
             <Form className="space-y-4">
               {/* Email */}
               <div className="flex flex-col">
@@ -127,7 +158,7 @@ export default function ResetPasswordPage() {
                   id="email"
                   name="email"
                   placeholder="Enter your email address"
-                  className="border px-3 py-2 rounded mt-1"
+                  className="border px-3 py-2 rounded mt-1 bg-gray-100 cursor-not-allowed"
                   autoComplete="email"
                   disabled
                 />
@@ -179,6 +210,8 @@ export default function ResetPasswordPage() {
                   type="button"
                   className="absolute right-2 top-8 text-gray-500"
                   onClick={() => setShowPassword((prev) => !prev)}
+                  tabIndex={-1}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? (
                     <EyeOff className="w-4 h-4" />
@@ -199,7 +232,7 @@ export default function ResetPasswordPage() {
               {/* Submit */}
               <button
                 type="submit"
-                className="w-full bg-amber-300 font-semibold py-2 rounded flex justify-center items-center"
+                className="w-full bg-amber-300 font-semibold py-2 rounded flex justify-center items-center disabled:opacity-50"
                 disabled={loading}
               >
                 {loading ? (

@@ -3,13 +3,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { ChevronDown, ChevronRight, Calendar, Eye } from "lucide-react";
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Collapsible,
   CollapsibleContent,
@@ -26,7 +20,6 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import ArchivedPaymentHistoryPage from "../ArchivedPaymentHistoryPage/ArchivedPaymentHistoryPage";
 import YearlyPayments from "./ArchivedPayment/ArchivedPaymentPage";
 
 const monthNames = [

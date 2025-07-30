@@ -35,8 +35,8 @@ export default function History() {
     }
   }, [username]);
   return (
-    <div className="w-full mt-12 md:mt-24 lg:mt-32">
-      <AnnualPaymentAnalysis payments={data?.payments} />
+    <div className="w-full my-12 md:my-24 lg:my-32">
+      {data?.payments && <AnnualPaymentAnalysis payments={data?.payments} />}
       <header className="my-4">
         <h2 className="text-2xl font-semibold mb-4 text-gray-800">
           Payment History
