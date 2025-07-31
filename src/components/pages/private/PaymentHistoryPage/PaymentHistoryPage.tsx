@@ -64,7 +64,7 @@ export default function PaymentsTable() {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          `${process.env.SERVER_LINK}/admin-payment/total-payments`
+          `${process.env.NEXT_PUBLIC_SERVER_LINK}/admin-payment/total-payments`
         );
         const data = await res.json();
         setDataSet(data); // Do something with the data

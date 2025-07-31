@@ -45,7 +45,7 @@ export default function ForgotPasswordPage() {
 
               try {
                 const res = await fetch(
-                  `${process.env.SERVER_LINK}/auth/forgot-password`,
+                  `${process.env.NEXT_PUBLIC_SERVER_LINK}/auth/forgot-password`,
                   {
                     method: "POST",
                     headers: {
@@ -56,7 +56,6 @@ export default function ForgotPasswordPage() {
                 );
 
                 const data = await res.json();
-                console.log(data);
                 if (
                   data.success &&
                   data.message === "Reset code sent to your email"

@@ -58,7 +58,7 @@ const PaymentHistoryByIdPage = ({ id }: { id: string }) => {
   const fetchData = async () => {
     try {
       const res = await fetch(
-        `${process.env.SERVER_LINK}/payment/payment-history/${id}`
+        `${process.env.NEXT_PUBLIC_SERVER_LINK}/payment/payment-history/${id}`
       );
       const data = await res.json();
       setPayments(data.payments || []);
@@ -85,7 +85,7 @@ const PaymentHistoryByIdPage = ({ id }: { id: string }) => {
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       try {
         const res = await fetch(
-          `${process.env.SERVER_LINK}/payment/update-payment`,
+          `${process.env.NEXT_PUBLIC_SERVER_LINK}/payment/update-payment`,
           {
             method: "PUT",
             headers: {
@@ -124,7 +124,6 @@ const PaymentHistoryByIdPage = ({ id }: { id: string }) => {
       othersComment: payment.othersComment || "",
     });
   };
-  console.log(payments);
   return (
     <div className="w-full mt-6 md:mt-12 lg:mt-32">
       <AnnualPaymentAnalysis data={payments} />

@@ -21,7 +21,7 @@ export default function History() {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          `${process.env.SERVER_LINK}/payment/payment-history/${username}`
+          `${process.env.NEXT_PUBLIC_SERVER_LINK}/payment/payment-history/${username}`
         );
         const result = await res.json();
         setData(result);

@@ -56,13 +56,16 @@ export default function DashboardPage() {
     }),
     onSubmit: async (values, { setSubmitting }) => {
       try {
-        const res = await fetch(`${process.env.SERVER_LINK}/auth/register`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(values),
-        });
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER_LINK}/auth/register`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
+          }
+        );
 
         const data = await res.json();
         if (!data.success) {
@@ -84,7 +87,9 @@ export default function DashboardPage() {
     const fetchUsers = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${process.env.SERVER_LINK}/admin/users`);
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER_LINK}/admin/users`
+        );
         const data = await res.json();
         setUsers(data?.users || []);
       } catch (error) {
@@ -109,7 +114,6 @@ export default function DashboardPage() {
       });
 
       const data = await res.json();
-      console.log("PATCH response:", data);
 
       if (!res.ok || !data.success) {
         toast.error(data.message || failMsg);
@@ -125,14 +129,14 @@ export default function DashboardPage() {
 
   const toggleUserRole = (id: string) =>
     handleToggle(
-      `${process.env.SERVER_LINK}/admin/users/role/${id}`,
+      `${process.env.NEXT_PUBLIC_SERVER_LINK}/admin/users/role/${id}`,
       "User role updated",
       "Failed to update role"
     );
 
   const toggleUserStatus = (id: string) =>
     handleToggle(
-      `${process.env.SERVER_LINK}/admin/users/deactivate/${id}`,
+      `${process.env.NEXT_PUBLIC_SERVER_LINK}/admin/users/deactivate/${id}`,
       "User status updated",
       "Failed to update status"
     );

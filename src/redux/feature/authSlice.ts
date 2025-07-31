@@ -20,16 +20,8 @@ const authSlice = createSlice({
     ) => {
       state.username = action.payload.username;
       state.role = action.payload.role;
-      console.log("setUser:", {
-        username: state.username,
-        role: state.role,
-      });
     },
     logOut: (state: any) => {
-      console.log("logOut:", {
-        username: state.username,
-        role: state.role,
-      });
       state.username = null;
       state.role = null;
     },

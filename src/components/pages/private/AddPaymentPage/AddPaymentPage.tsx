@@ -55,7 +55,6 @@ export default function AddDepositForm() {
   });
 
   const handleSubmit = async (values: typeof initialValues) => {
-    console.log(values);
     const parsedData = {
       ...values,
       monthlySubscriptionFee: parseFloat(values.monthlySubscriptionFee),
@@ -65,7 +64,7 @@ export default function AddDepositForm() {
     };
     try {
       const response = await fetch(
-        `${process.env.SERVER_LINK}/payment/make-payment`,
+        `${process.env.NEXT_PUBLIC_SERVER_LINK}/payment/make-payment`,
         {
           method: "POST",
           headers: {
@@ -75,7 +74,6 @@ export default function AddDepositForm() {
         }
       );
       const result = await response.json();
-      console.log(result);
       if (result?.success == false) {
         toast.error(result?.message || "Something went wrong!");
       } else {

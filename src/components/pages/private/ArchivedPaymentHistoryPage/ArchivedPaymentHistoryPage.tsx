@@ -7,7 +7,9 @@ export default function ArchivedPaymentHistoryPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`${process.env.SERVER_LINK}/archive-payment`);
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER_LINK}/archive-payment`
+        );
         const data = await res.json();
         setData(data);
       } catch (error) {

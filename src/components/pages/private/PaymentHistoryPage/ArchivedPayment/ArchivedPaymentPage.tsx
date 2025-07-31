@@ -40,7 +40,7 @@ export default function YearlyPayments() {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          `${process.env.SERVER_LINK}/archive-payment/yearly`
+          `${process.env.NEXT_PUBLIC_SERVER_LINK}/archive-payment/yearly`
         );
         const data = await res.json();
         setYearlyPaymentsData(data);

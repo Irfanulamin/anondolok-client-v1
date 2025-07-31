@@ -38,7 +38,7 @@ export const LoginPage = () => {
             onSubmit={async (values, { setSubmitting }) => {
               try {
                 const response = await fetch(
-                  `${process.env.SERVER_LINK}/auth/login`,
+                  `${process.env.NEXT_PUBLIC_SERVER_LINK}/auth/login`,
                   {
                     method: "POST",
                     headers: {
