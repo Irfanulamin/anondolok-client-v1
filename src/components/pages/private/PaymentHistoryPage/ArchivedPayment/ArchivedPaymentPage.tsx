@@ -40,7 +40,7 @@ export default function YearlyPayments() {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          "https://anondolok-backend-v1.vercel.app/api/archive-payment/yearly"
+          `${process.env.SERVER_LINK}/archive-payment/yearly`
         );
         const data = await res.json();
         setYearlyPaymentsData(data);

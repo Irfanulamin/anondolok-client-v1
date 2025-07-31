@@ -58,7 +58,7 @@ const PaymentHistoryByIdPage = ({ id }: { id: string }) => {
   const fetchData = async () => {
     try {
       const res = await fetch(
-        `https://anondolok-backend-v1.vercel.app/api/payment/payment-history/${id}`
+        `${process.env.SERVER_LINK}/payment/payment-history/${id}`
       );
       const data = await res.json();
       setPayments(data.payments || []);
@@ -85,7 +85,7 @@ const PaymentHistoryByIdPage = ({ id }: { id: string }) => {
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       try {
         const res = await fetch(
-          "https://anondolok-backend-v1.vercel.app/api/payment/update-payment",
+          `${process.env.SERVER_LINK}/payment/update-payment`,
           {
             method: "PUT",
             headers: {

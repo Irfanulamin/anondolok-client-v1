@@ -21,7 +21,7 @@ export default function History() {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          `https://anondolok-backend-v1.vercel.app/api/payment/payment-history/${username}`
+          `${process.env.SERVER_LINK}/payment/payment-history/${username}`
         );
         const result = await res.json();
         setData(result);

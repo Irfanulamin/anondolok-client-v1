@@ -66,7 +66,7 @@ export default function MemberDepositForm() {
     };
     try {
       const response = await fetch(
-        "https://anondolok-backend-v1.vercel.app/api/payment/make-payment",
+        `${process.env.SERVER_LINK}/payment/make-payment`,
         {
           method: "POST",
           headers: {

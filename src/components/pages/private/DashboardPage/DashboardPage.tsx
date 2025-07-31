@@ -56,16 +56,13 @@ export default function DashboardPage() {
     }),
     onSubmit: async (values, { setSubmitting }) => {
       try {
-        const res = await fetch(
-          "https://anondolok-backend-v1.vercel.app/api/auth/register",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(values),
-          }
-        );
+        const res = await fetch(`${process.env.SERVER_LINK}/auth/register`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        });
 
         const data = await res.json();
         if (!data.success) {
@@ -87,9 +84,7 @@ export default function DashboardPage() {
     const fetchUsers = async () => {
       try {
         setLoading(true);
-        const res = await fetch(
-          "https://anondolok-backend-v1.vercel.app/api/admin/users"
-        );
+        const res = await fetch(`${process.env.SERVER_LINK}/admin/users`);
         const data = await res.json();
         setUsers(data?.users || []);
       } catch (error) {
@@ -130,14 +125,14 @@ export default function DashboardPage() {
 
   const toggleUserRole = (id: string) =>
     handleToggle(
-      `https://anondolok-backend-v1.vercel.app/api/admin/users/role/${id}`,
+      `${process.env.SERVER_LINK}/admin/users/role/${id}`,
       "User role updated",
       "Failed to update role"
     );
 
   const toggleUserStatus = (id: string) =>
     handleToggle(
-      `https://anondolok-backend-v1.vercel.app/api/admin/users/deactivate/${id}`,
+      `${process.env.SERVER_LINK}/admin/users/deactivate/${id}`,
       "User status updated",
       "Failed to update status"
     );
