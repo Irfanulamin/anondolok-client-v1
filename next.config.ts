@@ -5,7 +5,7 @@ const nextConfig = {
   },
   // Add other existing configurations here
   trailingSlash: true, // Often needed for static exports
-  distDir: "out", // Optional: specify output directory
+  //distDir: "out", // Optional: specify output directory
 };
 
 module.exports = nextConfig;
