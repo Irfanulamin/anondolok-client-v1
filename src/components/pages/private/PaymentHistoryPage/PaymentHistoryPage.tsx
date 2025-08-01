@@ -16,7 +16,6 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-  TableFooter,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
@@ -64,7 +63,7 @@ export default function PaymentsTable() {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_LINK}/admin-payment/total-payments`
+          `http://103.132.96.187/api/admin-payment/total-payments`
         );
         const data = await res.json();
         setDataSet(data); // Do something with the data

@@ -106,7 +106,7 @@ export default function ResetPasswordPage() {
             setLoading(true);
             try {
               const res = await fetch(
-                `${process.env.NEXT_PUBLIC_SERVER_LINK}/auth/reset-password`,
+                `http://103.132.96.187/api/auth/reset-password`,
                 {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },

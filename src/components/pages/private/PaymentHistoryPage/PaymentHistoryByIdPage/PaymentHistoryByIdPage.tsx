@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -39,8 +39,14 @@ type Payment = {
   dateOfDeposit: string;
 };
 
-const PaymentHistoryByIdPage = ({ id }: { id: string }) => {
-  const [payments, setPayments] = useState<Payment[]>([]);
+type Props = {
+  id: string;
+  payments: Payment[];
+};
+
+const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
+  const [payments, setPayments] = useState<Payment[]>(initialPayments);
+
   const refreshPage = () => {
     window.location.reload();
   };
@@ -54,22 +60,6 @@ const PaymentHistoryByIdPage = ({ id }: { id: string }) => {
     othersAmount: Yup.number().min(0).required("Required"),
     othersComment: Yup.string().optional(),
   });
-
-  const fetchData = async () => {
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_LINK}/payment/payment-history/${id}`
-      );
-      const data = await res.json();
-      setPayments(data.payments || []);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, [id]);
 
   const formik = useFormik({
     initialValues: {
@@ -85,7 +75,7 @@ const PaymentHistoryByIdPage = ({ id }: { id: string }) => {
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_LINK}/payment/update-payment`,
+          `http://103.132.96.187/api/payment/update-payment`,
           {
             method: "PUT",
             headers: {
@@ -100,8 +90,7 @@ const PaymentHistoryByIdPage = ({ id }: { id: string }) => {
         if (res.ok) {
           toast.success(data?.message || "Payment updated!");
           resetForm();
-          refreshPage(); // Close the Sheet
-          fetchData(); // Refresh data
+          refreshPage();
         } else {
           toast.error(data?.message || "Update failed.");
         }
@@ -124,6 +113,7 @@ const PaymentHistoryByIdPage = ({ id }: { id: string }) => {
       othersComment: payment.othersComment || "",
     });
   };
+
   return (
     <div className="w-full mt-6 md:mt-12 lg:mt-32">
       <AnnualPaymentAnalysis data={payments} />
@@ -196,9 +186,7 @@ const PaymentHistoryByIdPage = ({ id }: { id: string }) => {
                         <Button
                           variant="secondary"
                           size="icon"
-                          onClick={() => {
-                            populateForm(payment);
-                          }}
+                          onClick={() => populateForm(payment)}
                         >
                           <Edit2Icon size={16} />
                         </Button>

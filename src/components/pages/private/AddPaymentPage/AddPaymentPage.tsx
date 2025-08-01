@@ -64,7 +64,7 @@ export default function AddDepositForm() {
     };
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_LINK}/payment/make-payment`,
+        `http://103.132.96.187/api/payment/make-payment`,
         {
           method: "POST",
           headers: {

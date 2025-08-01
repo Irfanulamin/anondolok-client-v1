@@ -36,6 +36,9 @@ export default function DashboardPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [refresh, setRefresh] = useState(false);
   const [loading, setLoading] = useState(true);
+  const goToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -56,21 +59,19 @@ export default function DashboardPage() {
     }),
     onSubmit: async (values, { setSubmitting }) => {
       try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_LINK}/auth/register`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(values),
-          }
-        );
+        const res = await fetch(`http://103.132.96.187/api/auth/register`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        });
 
         const data = await res.json();
         if (!data.success) {
           toast.error(data.message || "Registration failed");
         } else {
+          goToTop();
           toast.success("User registered successfully");
           setRefresh((prev) => !prev); // trigger refresh
           formik.resetForm();
@@ -87,9 +88,7 @@ export default function DashboardPage() {
     const fetchUsers = async () => {
       try {
         setLoading(true);
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_LINK}/admin/users`
-        );
+        const res = await fetch(`http://103.132.96.187/api/admin/users`);
         const data = await res.json();
         setUsers(data?.users || []);
       } catch (error) {
@@ -118,6 +117,7 @@ export default function DashboardPage() {
       if (!res.ok || !data.success) {
         toast.error(data.message || failMsg);
       } else {
+        goToTop();
         toast.success(successMsg);
         setRefresh((prev) => !prev); // trigger refresh
       }
@@ -129,14 +129,14 @@ export default function DashboardPage() {
 
   const toggleUserRole = (id: string) =>
     handleToggle(
-      `${process.env.NEXT_PUBLIC_SERVER_LINK}/admin/users/role/${id}`,
+      `http://103.132.96.187/api/admin/users/role/${id}`,
       "User role updated",
       "Failed to update role"
     );
 
   const toggleUserStatus = (id: string) =>
     handleToggle(
-      `${process.env.NEXT_PUBLIC_SERVER_LINK}/admin/users/deactivate/${id}`,
+      `http://103.132.96.187/api/admin/users/deactivate/${id}`,
       "User status updated",
       "Failed to update status"
     );
@@ -151,21 +151,17 @@ export default function DashboardPage() {
   return (
     <div className="flex flex-col  w-full mt-16 mb-16 px-4">
       <h1 className="text-2xl font-bold mb-6">Members Management</h1>
-      <div className="flex justify-end gap-4">
-        <Button className="bg-black text-white mb-4 font-semibold text-base">
+      <div className="flex flex-wrap justify-end gap-1 md:gap-4 my-2">
+        <Button className="bg-black text-white font-semibold text-base">
           {users.length} Members
         </Button>
-        <Button
-          variant="outline"
-          className="mb-4"
-          onClick={() => setRefresh((prev) => !prev)}
-        >
-          <RefreshCcw /> Refresh Users
+        <Button variant="outline">
+          <RefreshCcw /> Refresh
         </Button>
 
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="outline" className="mb-4">
+            <Button variant="outline">
               <Plus /> Add User
             </Button>
           </SheetTrigger>

@@ -21,7 +21,7 @@ export default function History() {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_LINK}/payment/payment-history/${username}`
+          `http://103.132.96.187/api/payment/payment-history/${username}`
         );
         const result = await res.json();
         setData(result);
