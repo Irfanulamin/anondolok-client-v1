@@ -41,7 +41,7 @@ export default function Navbar() {
           } md:items-center`}
         >
           {navLinks.map((link) => {
-            const isActive = pathname === link.to;
+            const isActive = pathname.startsWith(link.to); // More flexible matching
             return (
               <Link
                 key={link.to}

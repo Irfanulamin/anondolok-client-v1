@@ -21,7 +21,7 @@ export default function History() {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          `http://103.132.96.187/api/payment/payment-history/${username}`
+          `https://anondolok-backend-v1.vercel.app/api/payment/payment-history/${username}`
         );
         const result = await res.json();
         setData(result);
@@ -49,17 +49,20 @@ export default function History() {
               <TableRow>
                 <TableHead className="w-24">Member ID</TableHead>
                 <TableHead className="min-w-[150px]">Member Name</TableHead>
-                <TableHead className="text-right w-32">
+                <TableHead className="text-left w-32">
                   Monthly Subscripyion
                 </TableHead>
-                <TableHead className="text-right w-32">
-                  Penalty Amount
+                <TableHead className="text-left w-32">
+                  Month(s) of Subscription
+                </TableHead>
+                <TableHead className="text-left w-32">
+                  Fines/Penalty Amount
                 </TableHead>
                 <TableHead className="w-32">Type of Submission</TableHead>
                 <TableHead className="min-w-[200px]">Bank Name</TableHead>
                 <TableHead className="min-w-[150px]">Bank Branch</TableHead>
                 <TableHead className="text-right w-32">Others Amount</TableHead>
-                <TableHead className="min-w-[200px]">Others Comment</TableHead>
+                <TableHead className="min-w-[100px]">Others Comment</TableHead>
                 <TableHead className="w-28">Date of Submission</TableHead>
               </TableRow>
             </TableHeader>
@@ -84,6 +87,9 @@ export default function History() {
                       payment.monthlySubscriptionFee
                     ).toLocaleString()}
                     ৳
+                  </TableCell>
+                  <TableCell className=" font-semibold text-left w-32">
+                    {payment.monthsOfPayment || "N/A"}
                   </TableCell>
                   <TableCell className="text-red-600 font-semibold text-left w-32">
                     {Number.parseInt(payment.finesPenalty).toLocaleString()}৳

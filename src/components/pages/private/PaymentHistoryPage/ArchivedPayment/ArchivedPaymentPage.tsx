@@ -40,7 +40,7 @@ export default function YearlyPayments() {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          `http://103.132.96.187/api/archive-payment/yearly`
+          `https://anondolok-backend-v1.vercel.app/api/archive-payment/yearly`
         );
         const data = await res.json();
         setYearlyPaymentsData(data);
@@ -91,7 +91,7 @@ export default function YearlyPayments() {
                   <div className="bg-amber-950 px-2 py-1 rounded-lg">
                     <span className="font-semibold text-white">
                       {"Total: "}
-                      {yearData.total_amount.toLocaleString("en-US")}
+                      {yearData.total_amount.toLocaleString("en-IN")}
                       &#2547;
                     </span>
                   </div>

@@ -35,6 +35,7 @@ type Payment = {
   periodicalDeposit: number;
   othersAmount: number;
   othersComment?: string;
+  monthsOfPayment?: string;
   totalAmount: number;
   dateOfDeposit: string;
 };
@@ -59,6 +60,7 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
     periodicalDeposit: Yup.number().min(0).required("Required"),
     othersAmount: Yup.number().min(0).required("Required"),
     othersComment: Yup.string().optional(),
+    monthsOfPayment: Yup.string().optional(),
   });
 
   const formik = useFormik({
@@ -70,12 +72,13 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
       periodicalDeposit: 0,
       othersAmount: 0,
       othersComment: "",
+      monthsOfPayment: "",
     },
     validationSchema: paymentSchema,
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       try {
         const res = await fetch(
-          `http://103.132.96.187/api/payment/update-payment`,
+          `https://anondolok-backend-v1.vercel.app/api/payment/update-payment`,
           {
             method: "PUT",
             headers: {
@@ -111,6 +114,7 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
       periodicalDeposit: payment.periodicalDeposit || 0,
       othersAmount: payment.othersAmount || 0,
       othersComment: payment.othersComment || "",
+      monthsOfPayment: payment.monthsOfPayment || "",
     });
   };
 
@@ -129,7 +133,10 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
               <TableRow>
                 <TableHead className="text-left">Deposited Date</TableHead>
                 <TableHead>Member</TableHead>
-                <TableHead className="text-right">Monthly Fees</TableHead>
+                <TableHead className="text-left">Monthly Fees</TableHead>
+                <TableHead className="text-left">
+                  Month(s) of Subscription
+                </TableHead>
                 <TableHead className="text-right">Fines</TableHead>
                 <TableHead className="text-right">Others</TableHead>
                 <TableHead className="text-right">Other's Comment</TableHead>
@@ -163,8 +170,11 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
                       {payment.memberId}
                     </div>
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="text-left">
                     {payment.monthlySubscriptionFee}৳
+                  </TableCell>
+                  <TableCell className="text-left">
+                    {payment.monthsOfPayment || "N/A"}
                   </TableCell>
                   <TableCell className="text-right">
                     {payment.finesPenalty}৳
@@ -173,9 +183,7 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
                     {payment.othersAmount}৳
                   </TableCell>
                   <TableCell className="text-right">
-                    {payment.othersComment?.trim()
-                      ? payment.othersComment
-                      : "N/A"}
+                    {payment.othersComment || "N/A"}
                   </TableCell>
                   <TableCell className="text-right font-medium text-base">
                     {payment.totalAmount}৳
@@ -191,7 +199,7 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
                           <Edit2Icon size={16} />
                         </Button>
                       </SheetTrigger>
-                      <SheetContent className="bg-white text-black border-none w-full">
+                      <SheetContent className="bg-white text-black border-none w-full overflow-scroll custom-scrollbar">
                         <SheetHeader>
                           <SheetTitle>Edit Payment Details</SheetTitle>
                           <SheetDescription>
@@ -221,7 +229,7 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
                                 type: "number",
                               },
                               {
-                                label: "Fines Penalty",
+                                label: "Fines/Penalty",
                                 name: "finesPenalty",
                                 type: "number",
                               },
@@ -275,10 +283,31 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
 
                             <div>
                               <label
+                                htmlFor="monthsOfPayment"
+                                className="font-semibold"
+                              >
+                                Month(s) of Subscription
+                              </label>
+                              <Input
+                                id="monthsOfPayment"
+                                name="monthsOfPayment"
+                                type="text"
+                                onChange={formik.handleChange}
+                                value={formik.values.monthsOfPayment}
+                              />
+                              {formik.errors.monthsOfPayment &&
+                                formik.touched.monthsOfPayment && (
+                                  <p className="text-red-500 text-sm">
+                                    {formik.errors.monthsOfPayment}
+                                  </p>
+                                )}
+                            </div>
+                            <div>
+                              <label
                                 htmlFor="othersComment"
                                 className="font-semibold"
                               >
-                                Others Comment
+                                Comment of Others Comment
                               </label>
                               <Input
                                 id="othersComment"

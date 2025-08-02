@@ -45,7 +45,7 @@ export default function ForgotPasswordPage() {
 
               try {
                 const res = await fetch(
-                  `http://103.132.96.187/api/auth/forgot-password`,
+                  `https://anondolok-backend-v1.vercel.app/api/auth/forgot-password`,
                   {
                     method: "POST",
                     headers: {

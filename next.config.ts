@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  trailingSlash: true, // Important for static HTML compatibility
   images: {
-    unoptimized: true,
+    unoptimized: true, // Needed if using <Image> without next/image loader
   },
-  // Add other existing configurations here
-  trailingSlash: true, // Often needed for static exports
-  //distDir: "out", // Optional: specify output directory
+  //output: "export", // <- Add this line for static export
+  // distDir: "out", // Output directory for cPanel public_html
 };
 
 module.exports = nextConfig;

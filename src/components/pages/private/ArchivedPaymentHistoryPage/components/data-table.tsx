@@ -112,7 +112,7 @@ export function DataTable({ data }: DataTableProps) {
                 </TableCell>
               ))}
               <TableCell className="text-right">
-                {row["Total Deposit"]}
+                {row["Total Deposit"]}&#2547;
               </TableCell>
             </TableRow>
           ))}

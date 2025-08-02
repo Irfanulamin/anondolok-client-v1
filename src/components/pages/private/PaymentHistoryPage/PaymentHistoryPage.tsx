@@ -63,7 +63,7 @@ export default function PaymentsTable() {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          `http://103.132.96.187/api/admin-payment/total-payments`
+          `https://anondolok-backend-v1.vercel.app/api/admin-payment/total-payments`
         );
         const data = await res.json();
         setDataSet(data); // Do something with the data
@@ -123,7 +123,7 @@ export default function PaymentsTable() {
                           {"Total: "}
                           {calculateTotal(
                             Object.values(monthsData).flat() as any
-                          ).toLocaleString()}
+                          ).toLocaleString("en-IN")}
                           &#2547;
                         </span>
                       </div>
@@ -165,7 +165,7 @@ export default function PaymentsTable() {
                                 >
                                   {calculateTotal(
                                     payments as any
-                                  ).toLocaleString()}
+                                  ).toLocaleString("en-IN")}
                                   &#2547;
                                 </Badge>
                               </div>
@@ -182,8 +182,11 @@ export default function PaymentsTable() {
                                     <TableHead className="text-left text-white">
                                       Member
                                     </TableHead>
-                                    <TableHead className="text-right text-white">
+                                    <TableHead className="text-left text-white">
                                       Monthly Fees
+                                    </TableHead>
+                                    <TableHead className="text-left text-white">
+                                      Month(s) of Subscription
                                     </TableHead>
                                     <TableHead className="text-right text-white">
                                       Fines
@@ -213,33 +216,36 @@ export default function PaymentsTable() {
                                         <TableCell className="text-left font-medium underline text-base">
                                           <div className="flex items-start">
                                             <Link
-                                              href={`/payments-history/${payment._id.memberId}`}
+                                              href={`/payments-history/user/?id=${payment._id.memberId}`}
                                             >
                                               <Eye className="ml-2 h-6 w-6 mr-2 text-amber-950" />
                                             </Link>
                                           </div>
                                         </TableCell>
                                         <TableCell>
-                                          <div className="font-medium">
+                                          <div className="font-medium text-base">
                                             {payment._id.memberName}
                                           </div>
                                           <div className="text-sm text-muted-foreground">
                                             {payment._id.memberId}
                                           </div>
                                         </TableCell>
-                                        <TableCell className="text-right">
+                                        <TableCell className="text-left text-base font-medium">
                                           {payment.totalMonthlyFees}&#2547;
                                         </TableCell>
-                                        <TableCell className="text-right">
+                                        <TableCell className="text-left text-base">
+                                          {payment.monthsOfPayment || "N/A"}
+                                        </TableCell>
+                                        <TableCell className="text-right text-base font-medium">
                                           {payment.totalFines}&#2547;
                                         </TableCell>
-                                        <TableCell className="text-right">
+                                        <TableCell className="text-right text-base font-medium">
                                           {payment.totalOthers}&#2547;
                                         </TableCell>
-                                        <TableCell className="text-right">
+                                        <TableCell className="text-right text-base">
                                           {payment.othersComment || "N/A"}
                                         </TableCell>
-                                        <TableCell className="text-right font-medium text-base">
+                                        <TableCell className="text-right text-base font-medium">
                                           {payment.totalAmount}&#2547;
                                         </TableCell>
                                       </TableRow>

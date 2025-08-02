@@ -7,7 +7,9 @@ export default function ArchivedPaymentHistoryPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`http://103.132.96.187/api/archive-payment`);
+        const res = await fetch(
+          `https://anondolok-backend-v1.vercel.app/api/archive-payment`
+        );
         const data = await res.json();
         setData(data);
       } catch (error) {

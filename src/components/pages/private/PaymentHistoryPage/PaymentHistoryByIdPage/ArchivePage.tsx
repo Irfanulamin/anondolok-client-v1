@@ -43,7 +43,7 @@ const ArchivePaymentSummaryByYear: React.FC<Props> = ({ username }) => {
     const fetchYearlyAnalytics = async () => {
       try {
         const res = await fetch(
-          `http://103.132.96.187/api/archive-payment/user/${username}`
+          `https://anondolok-backend-v1.vercel.app/api/archive-payment/user/${username}`
         );
 
         const json = await res.json(); // <-- Read JSON once
