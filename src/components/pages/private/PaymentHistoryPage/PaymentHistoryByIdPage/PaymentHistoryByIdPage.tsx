@@ -289,7 +289,7 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
                             </div>
                             {[
                               {
-                                label: "Fines/Penalty",
+                                label: "Fine/Penalty",
                                 name: "finesPenalty",
                                 type: "number",
                               },

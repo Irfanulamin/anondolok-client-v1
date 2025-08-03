@@ -189,7 +189,7 @@ export default function PaymentsTable() {
                                       Month(s) & Year of Subscription
                                     </TableHead>
                                     <TableHead className="text-right text-white">
-                                      Fines/Penalty
+                                      Fine/Penalty
                                     </TableHead>
                                     <TableHead className="text-right text-white">
                                       Others

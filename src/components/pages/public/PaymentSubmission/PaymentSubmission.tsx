@@ -62,7 +62,7 @@ export default function MemberDepositForm() {
   const { username } = useAppSelector((state) => state.auth);
   const labelMap: Record<string, string> = {
     monthsOfPayment: "Month(s) & Year of Subscription",
-    finesPenalty: "Fines/Penalty",
+    finesPenalty: "Fine/Penalty",
   };
 
   const getLabel = (field: string) =>
@@ -148,7 +148,7 @@ export default function MemberDepositForm() {
     )
     .test(
       "at-least-one-amount",
-      "At least one of the following is required: Monthly Subscription Fee, Fines/Penalty, Periodical Deposit, or Others Amount.",
+      "At least one of the following is required: Monthly Subscription Fee, Fine/Penalty, Periodical Deposit, or Others Amount.",
       function (values) {
         const {
           monthlySubscriptionFee,

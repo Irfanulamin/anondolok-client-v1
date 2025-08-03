@@ -56,7 +56,7 @@ export default function History() {
                   Month(s) & Year of Subscription
                 </TableHead>
                 <TableHead className="text-left w-32">
-                  Fines/Penalty Amount
+                  Fine/Penalty Amount
                 </TableHead>
                 <TableHead className="w-32">Type of Submission</TableHead>
                 <TableHead className="min-w-[200px]">Bank Name</TableHead>

@@ -114,7 +114,7 @@ export default function AnnualPaymentAnalysis({ data }: any) {
                       Monthly Subscription Fee (৳)
                     </TableHead>
                     <TableHead className="text-right text-white text-base font-medium">
-                      Fines/Penalty (৳)
+                      Fine/Penalty (৳)
                     </TableHead>
                     <TableHead className="text-right text-white text-base font-medium">
                       Others (৳)
