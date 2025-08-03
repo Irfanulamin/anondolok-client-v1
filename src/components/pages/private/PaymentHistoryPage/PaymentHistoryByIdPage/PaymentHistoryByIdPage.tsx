@@ -135,7 +135,7 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
                 <TableHead>Member</TableHead>
                 <TableHead className="text-left">Monthly Fees</TableHead>
                 <TableHead className="text-left">
-                  Month(s) of Subscription
+                  Month(s) & Year of Subscription
                 </TableHead>
                 <TableHead className="text-right">Fines</TableHead>
                 <TableHead className="text-right">Others</TableHead>
@@ -228,21 +228,6 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
                                 name: "monthlySubscriptionFee",
                                 type: "number",
                               },
-                              {
-                                label: "Fines/Penalty",
-                                name: "finesPenalty",
-                                type: "number",
-                              },
-                              {
-                                label: "Periodical Deposit",
-                                name: "periodicalDeposit",
-                                type: "number",
-                              },
-                              {
-                                label: "Others Amount",
-                                name: "othersAmount",
-                                type: "number",
-                              },
                             ].map((field) => (
                               <div key={field.name}>
                                 <label
@@ -286,7 +271,7 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
                                 htmlFor="monthsOfPayment"
                                 className="font-semibold"
                               >
-                                Month(s) of Subscription
+                                Month(s) & Year of Subscription
                               </label>
                               <Input
                                 id="monthsOfPayment"
@@ -302,12 +287,64 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
                                   </p>
                                 )}
                             </div>
+                            {[
+                              {
+                                label: "Fines/Penalty",
+                                name: "finesPenalty",
+                                type: "number",
+                              },
+                              {
+                                label: "Periodical Deposit",
+                                name: "periodicalDeposit",
+                                type: "number",
+                              },
+                              {
+                                label: "Others Amount",
+                                name: "othersAmount",
+                                type: "number",
+                              },
+                            ].map((field) => (
+                              <div key={field.name}>
+                                <label
+                                  htmlFor={field.name}
+                                  className="font-semibold"
+                                >
+                                  {field.label}
+                                </label>
+                                <Input
+                                  id={field.name}
+                                  name={field.name}
+                                  type={field.type || "text"}
+                                  onChange={formik.handleChange}
+                                  value={
+                                    formik.values[
+                                      field.name as keyof typeof formik.values
+                                    ] as string | number
+                                  }
+                                  className="w-full"
+                                />
+                                {formik.errors[
+                                  field.name as keyof typeof formik.errors
+                                ] &&
+                                formik.touched[
+                                  field.name as keyof typeof formik.touched
+                                ] ? (
+                                  <p className="text-red-500 text-sm">
+                                    {
+                                      formik.errors[
+                                        field.name as keyof typeof formik.errors
+                                      ]
+                                    }
+                                  </p>
+                                ) : null}
+                              </div>
+                            ))}
                             <div>
                               <label
                                 htmlFor="othersComment"
                                 className="font-semibold"
                               >
-                                Comment of Others Comment
+                                Comment of Others Amount
                               </label>
                               <Input
                                 id="othersComment"

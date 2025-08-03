@@ -114,7 +114,7 @@ export default function AnnualPaymentAnalysis({
                     Monthly (৳)
                   </TableHead>
                   <TableHead className="text-right text-white text-base font-medium">
-                    Fines (৳)
+                    Fines/Penalty (৳)
                   </TableHead>
                   <TableHead className="text-right text-white text-base font-medium">
                     Periodical (৳)

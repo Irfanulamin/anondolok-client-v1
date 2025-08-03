@@ -186,10 +186,10 @@ export default function PaymentsTable() {
                                       Monthly Fees
                                     </TableHead>
                                     <TableHead className="text-left text-white">
-                                      Month(s) of Subscription
+                                      Month(s) & Year of Subscription
                                     </TableHead>
                                     <TableHead className="text-right text-white">
-                                      Fines
+                                      Fines/Penalty
                                     </TableHead>
                                     <TableHead className="text-right text-white">
                                       Others

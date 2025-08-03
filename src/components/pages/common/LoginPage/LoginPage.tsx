@@ -1,15 +1,22 @@
 "use client";
 import Container from "@/components/common/Container";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { setUser } from "@/redux/feature/authSlice";
 import { Formik } from "formik";
+import { Eye, EyeOff } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 
 export const LoginPage = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
   const dispatch = useDispatch();
   const router = useRouter();
   return (
@@ -87,7 +94,7 @@ export const LoginPage = () => {
                   <label className="text-base font-bold" htmlFor="username">
                     Username
                   </label>
-                  <input
+                  <Input
                     id="username"
                     name="username"
                     placeholder="Username"
@@ -106,16 +113,37 @@ export const LoginPage = () => {
                   <label className="text-base font-bold" htmlFor="password">
                     Password
                   </label>
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    placeholder="Password"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.password}
-                    className="border rounded p-2"
-                  />
+                  <div className="relative">
+                    <Input
+                      id="password"
+                      name="password"
+                      type={showPassword ? "text" : "password"} // Conditional type
+                      placeholder="Password"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.password}
+                      className="w-full"
+                    />
+                    <Button
+                      type="button" // Important: prevent form submission
+                      variant="ghost"
+                      size="icon"
+                      className="absolute inset-y-0 right-0 flex items-center justify-center h-full px-3"
+                      onClick={togglePasswordVisibility}
+                      aria-label={
+                        showPassword ? "Hide password" : "Show password"
+                      }
+                    >
+                      {showPassword ? (
+                        <EyeOff className="h-4 w-4" />
+                      ) : (
+                        <Eye className="h-4 w-4" />
+                      )}
+                      <span className="sr-only">
+                        {showPassword ? "Hide password" : "Show password"}
+                      </span>
+                    </Button>
+                  </div>
                   {errors.password && touched.password && (
                     <span className="text-red-500 text-sm">
                       {errors.password}

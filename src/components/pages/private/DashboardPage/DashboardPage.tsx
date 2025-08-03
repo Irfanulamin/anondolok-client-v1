@@ -17,12 +17,21 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Edit2Icon, BadgeCheck, Ban, RefreshCcw, Plus } from "lucide-react";
+import {
+  Edit2Icon,
+  BadgeCheck,
+  Ban,
+  RefreshCcw,
+  Plus,
+  EyeOff,
+  Eye,
+} from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 
 interface User {
   _id: string;
@@ -38,6 +47,10 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const goToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
   };
 
   const formik = useFormik({
@@ -182,7 +195,7 @@ export default function DashboardPage() {
                 onSubmit={formik.handleSubmit}
                 className="flex flex-col gap-4"
               >
-                <input
+                <Input
                   type="email"
                   name="email"
                   placeholder="Email"
@@ -197,7 +210,7 @@ export default function DashboardPage() {
                   </div>
                 )}
 
-                <input
+                <Input
                   type="text"
                   name="username"
                   placeholder="Username"
@@ -211,22 +224,40 @@ export default function DashboardPage() {
                     {formik.errors.username}
                   </div>
                 )}
-
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.password}
-                  className="p-2 border rounded"
-                />
-                {formik.touched.password && formik.errors.password && (
-                  <div className="text-red-500 text-sm">
-                    {formik.errors.password}
+                <div className="relative">
+                  <Input
+                    name="password"
+                    placeholder="Password"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.password}
+                    type={showPassword ? "text" : "password"}
+                    className="p-2 border rounded"
+                  />
+                  <div className="h-1">
+                    {formik.touched.password && formik.errors.password && (
+                      <div className="text-red-500 text-sm">
+                        {formik.errors.password}
+                      </div>
+                    )}
                   </div>
-                )}
-
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="absolute inset-y-0 right-0 flex items-center justify-center h-full px-3"
+                    onClick={togglePasswordVisibility}
+                    aria-label={
+                      showPassword ? "Hide password" : "Show password"
+                    }
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </Button>
+                </div>
                 <button
                   type="submit"
                   disabled={formik.isSubmitting}

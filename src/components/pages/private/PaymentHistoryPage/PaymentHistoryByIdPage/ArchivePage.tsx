@@ -72,7 +72,7 @@ const ArchivePaymentSummaryByYear: React.FC<Props> = ({ username }) => {
     <div className="space-y-6">
       <div>
         <h3 className="text-2xl font-semibold mb-4 text-gray-800">
-          Archived Yearly Payments
+          Archived Monthly Subscription (Year-wise)
         </h3>
         {archivePayment ? (
           <div className="overflow-x-auto rounded-lg">

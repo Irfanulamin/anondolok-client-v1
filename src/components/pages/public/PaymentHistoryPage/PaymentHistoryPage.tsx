@@ -53,7 +53,7 @@ export default function History() {
                   Monthly Subscripyion
                 </TableHead>
                 <TableHead className="text-left w-32">
-                  Month(s) of Subscription
+                  Month(s) & Year of Subscription
                 </TableHead>
                 <TableHead className="text-left w-32">
                   Fines/Penalty Amount
@@ -62,7 +62,9 @@ export default function History() {
                 <TableHead className="min-w-[200px]">Bank Name</TableHead>
                 <TableHead className="min-w-[150px]">Bank Branch</TableHead>
                 <TableHead className="text-right w-32">Others Amount</TableHead>
-                <TableHead className="min-w-[100px]">Others Comment</TableHead>
+                <TableHead className="min-w-[100px]">
+                  Comment of Others Amount
+                </TableHead>
                 <TableHead className="w-28">Date of Submission</TableHead>
               </TableRow>
             </TableHeader>

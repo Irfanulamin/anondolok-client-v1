@@ -66,7 +66,7 @@ export function DataTable({ data }: DataTableProps) {
               Periodical Deposits
             </TableHead>
             <TableHead colSpan={8} className="text-center border-l border-r">
-              Monthly Subscription
+              Monthly Subscription Fee
             </TableHead>
             <TableHead rowSpan={2} className="text-right">
               Total Deposit

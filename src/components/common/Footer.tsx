@@ -14,7 +14,7 @@ export default function Footer() {
             className="rounded"
           />
           <p className="text-base text-sky-100 font-semibold">
-            © 2028 Anondolok Copyright. All rights reserved.
+            © 2025-2026 Anondolok Copyright. All rights reserved.
           </p>
         </div>
       </div>

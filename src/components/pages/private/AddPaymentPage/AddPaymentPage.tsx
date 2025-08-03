@@ -59,6 +59,13 @@ const getPlaceholder = (field: keyof FormValues): string => {
 };
 
 export default function MemberDepositForm() {
+  const labelMap: Record<string, string> = {
+    monthsOfPayment: "Month(s) & Year of Subscription",
+    finesPenalty: "Fines/Penalty",
+  };
+
+  const getLabel = (field: string) =>
+    labelMap[field] || field.replace(/([A-Z])/g, " $1");
   const initialValues: FormValues = {
     memberName: "",
     memberId: "",
@@ -120,7 +127,7 @@ export default function MemberDepositForm() {
     )
     .test(
       "monthly-subscription-months-pair",
-      "Both Monthly Subscription Fee and Month(s) Of Payment are required together.",
+      "Both Monthly Subscription Fee and Month(s) & Year of Subscription are required together.",
       function (values) {
         const { monthlySubscriptionFee, monthsOfPayment } = values;
         const hasFee = !!monthlySubscriptionFee && monthlySubscriptionFee > 0;
@@ -130,7 +137,7 @@ export default function MemberDepositForm() {
           return this.createError({
             path: "monthsOfPayment",
             message:
-              "Both Monthly Subscription Fee and Month(s) Of Payment are required together.",
+              "Both Monthly Subscription Fee and Month(s) & Year of Subscription are required together.",
           });
         }
 
@@ -344,9 +351,7 @@ export default function MemberDepositForm() {
                       field === "monthsOfPayment" ? "" : "capitalize"
                     } text-base `}
                   >
-                    {field === "monthsOfPayment"
-                      ? "Month(s) of Subscription"
-                      : field.replace(/([A-Z])/g, " $1")}
+                    {getLabel(field)}
                   </Label>
                   <Input
                     id={field}
@@ -366,7 +371,7 @@ export default function MemberDepositForm() {
 
               <div className="col-span-1">
                 <Label htmlFor="othersComment" className="text-base">
-                  Others Comment
+                  Comment of Others Amount
                 </Label>
                 <Input
                   id="othersComment"
