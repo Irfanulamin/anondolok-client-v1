@@ -30,7 +30,6 @@ import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 
 interface User {
@@ -173,7 +172,7 @@ export default function DashboardPage() {
         <Button className="bg-black text-white font-semibold text-base">
           {users.length} Members
         </Button>
-        <Button variant="outline">
+        <Button variant="outline" onClick={(prev) => setRefresh(!prev)}>
           <RefreshCcw /> Refresh
         </Button>
 

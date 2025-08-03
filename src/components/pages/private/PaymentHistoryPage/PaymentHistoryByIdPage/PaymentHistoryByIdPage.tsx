@@ -18,13 +18,23 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Edit2Icon } from "lucide-react";
+import { Edit2Icon, Trash2Icon } from "lucide-react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import ArchivePaymentSummaryByYear from "./ArchivePage";
 import AnnualPaymentAnalysis from "./SummaryPage";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 type Payment = {
   _id: string;
@@ -46,7 +56,35 @@ type Props = {
 };
 
 const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
+  const scrollAndRefresh = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
+  };
   const [payments, setPayments] = useState<Payment[]>(initialPayments);
+  const handleDelete = async (id: string) => {
+    try {
+      const response = await fetch(
+        `https://anondolok-backend-v1.vercel.app/api/payment/delete-payment/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        toast.error(result.error || "Failed to delete payment");
+      }
+
+      toast.success("Payment deleted successfully");
+      scrollAndRefresh();
+    } catch (error: any) {
+      toast.error("Delete error:", error);
+      toast.error(error.message);
+    }
+  };
 
   const refreshPage = () => {
     window.location.reload();
@@ -192,11 +230,10 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
                     <Sheet>
                       <SheetTrigger asChild>
                         <Button
-                          variant="secondary"
-                          size="icon"
+                          className="bg-transparent shadow-none"
                           onClick={() => populateForm(payment)}
                         >
-                          <Edit2Icon size={16} />
+                          <Edit2Icon className="text-green-900" size={16} />
                         </Button>
                       </SheetTrigger>
                       <SheetContent className="bg-white text-black border-none w-full overflow-scroll custom-scrollbar">
@@ -374,6 +411,40 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
                         </div>
                       </SheetContent>
                     </Sheet>
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button className="bg-transparent shadow-none">
+                          <Trash2Icon size={16} className="text-red-900" />
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-[425px] bg-white">
+                        <DialogHeader>
+                          <DialogTitle className="text-red-500">
+                            Delete Payment Details
+                          </DialogTitle>
+                          <DialogDescription>
+                            Are you sure? This action will permanently remove
+                            the payment record and cannot be undone.
+                          </DialogDescription>
+                        </DialogHeader>
+                        <DialogFooter>
+                          <DialogClose asChild>
+                            <Button className="text-black hover:text-slate-950">
+                              Cancel
+                            </Button>
+                          </DialogClose>
+
+                          <DialogClose asChild>
+                            <Button
+                              className=" transition-all ease-in bg-red-500 text-white hover:text-red-500 hover:bg-white"
+                              onClick={() => handleDelete(payment._id)}
+                            >
+                              Delete
+                            </Button>
+                          </DialogClose>
+                        </DialogFooter>
+                      </DialogContent>
+                    </Dialog>
                   </TableCell>
                 </TableRow>
               ))}
