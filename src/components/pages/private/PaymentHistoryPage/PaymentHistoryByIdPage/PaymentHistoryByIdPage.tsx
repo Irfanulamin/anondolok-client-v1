@@ -12,7 +12,6 @@ import {
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -35,6 +34,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { DialogClose } from "@radix-ui/react-dialog";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@radix-ui/react-popover";
+import LifetimePayment from "@/components/pages/public/PaymentHistoryPage/LifetimePayment";
 
 type Payment = {
   _id: string;
@@ -48,6 +53,9 @@ type Payment = {
   monthsOfPayment?: string;
   totalAmount: number;
   dateOfDeposit: string;
+  typeOfDeposit: string;
+  bankName: string;
+  bankBranch: string;
 };
 
 type Props = {
@@ -66,7 +74,7 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
   const handleDelete = async (id: string) => {
     try {
       const response = await fetch(
-        `https://anondolok-backend-v1.vercel.app/api/payment/delete-payment/${id}`,
+        `http://localhost:5000/api/payment/delete-payment/${id}`,
         {
           method: "DELETE",
         }
@@ -93,6 +101,15 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
   const paymentSchema = Yup.object({
     _id: Yup.string().required("Payment ID is required"),
     memberId: Yup.string().required("Member ID is required"),
+    memberName: Yup.string().required("Member Name is required"),
+    typeOfDeposit: Yup.string()
+      .oneOf(
+        ["BANK", "BEFTN", "NPSB"],
+        'Put a valid input: "BANK", "BEFTN", or "NPSB".'
+      )
+      .required("typeOfDeposit is required."),
+    bankName: Yup.string().required("Bank Name is required"),
+    bankBranch: Yup.string().required("Bank Branch is required"),
     monthlySubscriptionFee: Yup.number().min(0).required("Required"),
     finesPenalty: Yup.number().min(0).required("Required"),
     periodicalDeposit: Yup.number().min(0).required("Required"),
@@ -105,6 +122,10 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
     initialValues: {
       _id: "",
       memberId: "",
+      memberName: "",
+      typeOfDeposit: "",
+      bankName: "",
+      bankBranch: "",
       monthlySubscriptionFee: 0,
       finesPenalty: 0,
       periodicalDeposit: 0,
@@ -116,7 +137,7 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       try {
         const res = await fetch(
-          `https://anondolok-backend-v1.vercel.app/api/payment/update-payment`,
+          `http://localhost:5000/api/payment/update-payment`,
           {
             method: "PUT",
             headers: {
@@ -147,6 +168,10 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
     formik.setValues({
       _id: payment._id || "",
       memberId: payment.memberId || "",
+      memberName: payment.memberName || "",
+      typeOfDeposit: payment.typeOfDeposit || "",
+      bankName: payment.bankName || "",
+      bankBranch: payment.bankBranch || "",
       monthlySubscriptionFee: payment.monthlySubscriptionFee || 0,
       finesPenalty: payment.finesPenalty || 0,
       periodicalDeposit: payment.periodicalDeposit || 0,
@@ -158,28 +183,33 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
 
   return (
     <div className="w-full mt-6 md:mt-12 lg:mt-32">
+      <LifetimePayment username={id} />
       <AnnualPaymentAnalysis data={payments} />
-      <header className="mb-4">
+      <header className="my-4">
         <h2 className="text-2xl font-semibold">
-          Payment History of <span className="uppercase">{id}</span>
+          Payment History of <span className="uppercase">{id}</span>{" "}
+          (Month-Wise)
         </h2>
       </header>
       <div className="w-full overflow-x-auto mb-6">
-        <div className="min-w-full inline-block align-middle bg-blue-900/30 pt-2 px-2 rounded-lg">
+        <div className="min-w-full inline-block align-middle bg-blue-300/30 pt-2 px-2 rounded-lg">
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead className="text-left">Deposited Date</TableHead>
                 <TableHead>Member</TableHead>
-                <TableHead className="text-left">Monthly Fees</TableHead>
                 <TableHead className="text-left">
-                  Month(s) & Year of Subscription
+                  Monthly <br /> Subscription
                 </TableHead>
-                <TableHead className="text-right">Fines</TableHead>
-                <TableHead className="text-right">Others</TableHead>
-                <TableHead className="text-right">Other's Comment</TableHead>
-                <TableHead className="text-right">Total Amount</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
+                <TableHead className="text-left">
+                  Month(s) & Year <br /> of Subscription
+                </TableHead>
+                <TableHead className="text-left">Type of Submission</TableHead>
+                <TableHead className="text-left">Fines</TableHead>
+                <TableHead className="text-left">Others</TableHead>
+                <TableHead className="text-left">Other's Comment</TableHead>
+                <TableHead className="text-left">Total Amount</TableHead>
+                <TableHead className="text-left">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -214,19 +244,41 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
                   <TableCell className="text-left">
                     {payment.monthsOfPayment || "N/A"}
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="text-left text-base">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <span className="cursor-pointer text-base font-semibold text-white bg-slate-950 hover:bg-white hover:text-slate-950 custom-transition p-2 rounded-lg">
+                          {payment.typeOfDeposit}
+                        </span>
+                      </PopoverTrigger>
+                      <PopoverContent
+                        side="right"
+                        className="w-auto p-2 text-sm bg-white rounded-lg border border-slate-950"
+                      >
+                        <p className="text-slate-950">
+                          <span className="font-semibold">Bank Name:</span>{" "}
+                          {payment.bankName}
+                        </p>
+                        <p className="text-slate-950">
+                          <span className="font-semibold">Bank Branch:</span>{" "}
+                          {payment.bankBranch}
+                        </p>
+                      </PopoverContent>
+                    </Popover>
+                  </TableCell>
+                  <TableCell className="text-left">
                     {payment.finesPenalty}৳
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="text-left">
                     {payment.othersAmount}৳
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="text-left">
                     {payment.othersComment || "N/A"}
                   </TableCell>
-                  <TableCell className="text-right font-medium text-base">
+                  <TableCell className="text-left font-medium text-base">
                     {payment.totalAmount}৳
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="text-left">
                     <Sheet>
                       <SheetTrigger asChild>
                         <Button
@@ -239,12 +291,9 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
                       <SheetContent className="bg-white text-black border-none w-full overflow-scroll custom-scrollbar">
                         <SheetHeader>
                           <SheetTitle>Edit Payment Details</SheetTitle>
-                          <SheetDescription>
-                            Update the selected payment information.
-                          </SheetDescription>
                         </SheetHeader>
 
-                        <div className="p-6">
+                        <div className="px-4">
                           <form
                             onSubmit={formik.handleSubmit}
                             className="space-y-4 w-full"
@@ -259,6 +308,22 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
                                 label: "Member ID",
                                 name: "memberId",
                                 isDisabled: true,
+                              },
+                              {
+                                label: "Member Name",
+                                name: "memberName",
+                              },
+                              {
+                                label: "Type Of Submission",
+                                name: "typeOfDeposit",
+                              },
+                              {
+                                label: "Bank Name",
+                                name: "bankName",
+                              },
+                              {
+                                label: "Bank Branch",
+                                name: "bankBranch",
                               },
                               {
                                 label: "Monthly Subscription Fee",

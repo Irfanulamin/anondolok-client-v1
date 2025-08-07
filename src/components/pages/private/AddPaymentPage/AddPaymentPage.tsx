@@ -191,7 +191,7 @@ export default function MemberDepositForm() {
 
     try {
       const res = await fetch(
-        `https://anondolok-backend-v1.vercel.app/api/payment/make-payment`,
+        `http://localhost:5000/api/payment/make-payment`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

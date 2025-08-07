@@ -12,6 +12,9 @@ import { useAppSelector } from "@/redux/hook";
 import { useEffect, useState } from "react";
 import ArchivePaymentSummaryByYear from "../../private/PaymentHistoryPage/PaymentHistoryByIdPage/ArchivePage";
 import AnnualPaymentAnalysis from "./YearlyHistory";
+import { Popover } from "@/components/ui/popover";
+import { PopoverContent, PopoverTrigger } from "@radix-ui/react-popover";
+import LifetimePayment from "./LifetimePayment";
 
 export default function History() {
   const { username } = useAppSelector((state) => state.auth);
@@ -21,7 +24,7 @@ export default function History() {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          `https://anondolok-backend-v1.vercel.app/api/payment/payment-history/${username}`
+          `http://localhost:5000/api/payment/payment-history/${username}`
         );
         const result = await res.json();
         setData(result);
@@ -36,10 +39,11 @@ export default function History() {
   }, [username]);
   return (
     <div className="w-full my-12 md:my-24 lg:my-32">
+      {data?.payments && <LifetimePayment username={username} />}
       {data?.payments && <AnnualPaymentAnalysis payments={data?.payments} />}
       <header className="my-4">
         <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-          Payment History
+          Payment History (Month-Wise)
         </h2>
       </header>
       <div className="w-full overflow-x-auto mb-6   rounded-2xl">
@@ -47,25 +51,22 @@ export default function History() {
           <Table className="w-full">
             <TableHeader className="bg-black text-white">
               <TableRow>
-                <TableHead className="w-24">Member ID</TableHead>
-                <TableHead className="min-w-[150px]">Member Name</TableHead>
-                <TableHead className="text-left w-32">
+                <TableHead className="text-left">Member ID</TableHead>
+                <TableHead className="text-left">Member Name</TableHead>
+                <TableHead className="text-left">
                   Monthly Subscripyion
                 </TableHead>
-                <TableHead className="text-left w-32">
+                <TableHead className="text-left">
                   Month(s) & Year of Subscription
                 </TableHead>
-                <TableHead className="text-left w-32">
-                  Fine/Penalty Amount
-                </TableHead>
-                <TableHead className="w-32">Type of Submission</TableHead>
-                <TableHead className="min-w-[200px]">Bank Name</TableHead>
-                <TableHead className="min-w-[150px]">Bank Branch</TableHead>
-                <TableHead className="text-right w-32">Others Amount</TableHead>
-                <TableHead className="min-w-[100px]">
+                <TableHead className="text-left">Fine/Penalty Amount</TableHead>
+                <TableHead className="text-letf">Type of Submission</TableHead>
+                <TableHead className="text-left">Others Amount</TableHead>
+                <TableHead className="text-left">
                   Comment of Others Amount
                 </TableHead>
-                <TableHead className="w-28">Date of Submission</TableHead>
+                <TableHead className="text-left">Total Amount</TableHead>
+                <TableHead className="text-left">Date of Submission</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -75,13 +76,13 @@ export default function History() {
                   className={`${
                     idx % 2
                       ? "hover:bg-sky-100/10 bg-sky-200/50"
-                      : "hover:bg-sky-200/10 bg-sky-300/50"
+                      : "hover:bg-sky-100/20 bg-sky-200/60"
                   }`}
                 >
-                  <TableCell className="font-medium w-24">
+                  <TableCell className="text-left">
                     {payment.memberId}
                   </TableCell>
-                  <TableCell className="min-w-[150px]">
+                  <TableCell className="text-left">
                     {payment.memberName}
                   </TableCell>
                   <TableCell className="text-green-600 font-semibold text-left w-32">
@@ -96,23 +97,39 @@ export default function History() {
                   <TableCell className="text-red-600 font-semibold text-left w-32">
                     {Number.parseInt(payment.finesPenalty).toLocaleString()}৳
                   </TableCell>
-                  <TableCell className="w-32">
-                    {payment.typeOfDeposit}
+                  <TableCell className="text-left text-base">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <span className="cursor-pointer text-base font-semibold text-white bg-slate-950 hover:bg-white hover:text-slate-950 custom-transition p-2 rounded-lg">
+                          {payment.typeOfDeposit}
+                        </span>
+                      </PopoverTrigger>
+                      <PopoverContent
+                        side="right"
+                        className="w-auto p-2 text-sm bg-white"
+                      >
+                        <p className="text-slate-950">
+                          <span className="font-semibold">Bank Name:</span>{" "}
+                          {payment.bankName}
+                        </p>
+                        <p className="text-slate-950">
+                          <span className="font-semibold">Bank Branch:</span>{" "}
+                          {payment.bankBranch}
+                        </p>
+                      </PopoverContent>
+                    </Popover>
                   </TableCell>
-                  <TableCell className="min-w-[200px]">
-                    {payment.bankName || "N/A"}
-                  </TableCell>
-                  <TableCell className="min-w-[150px]">
-                    {payment.bankBranch || "N/A"}
-                  </TableCell>
-                  <TableCell className="text-left w-32">
+                  <TableCell className="text-left">
                     {Number.parseInt(payment.othersAmount).toLocaleString()}৳
                   </TableCell>
-                  <TableCell className="min-w-[200px]">
+                  <TableCell className="text-left">
                     {payment.othersComment || "N/A"}
                   </TableCell>
+                  <TableCell className="text-left font-semibold">
+                    {Number.parseInt(payment.totalAmount).toLocaleString()}৳
+                  </TableCell>
 
-                  <TableCell className="w-28">
+                  <TableCell className="text-left">
                     <span className="font-semibold">
                       {new Date(payment.dateOfDeposit).toLocaleDateString(
                         "en-BD",

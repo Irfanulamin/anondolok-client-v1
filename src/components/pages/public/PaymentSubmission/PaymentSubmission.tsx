@@ -193,7 +193,7 @@ export default function MemberDepositForm() {
 
     try {
       const res = await fetch(
-        `https://anondolok-backend-v1.vercel.app/api/payment/make-payment`,
+        `http://localhost:5000/api/payment/make-payment`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -392,7 +392,19 @@ export default function MemberDepositForm() {
                   </p>
                 )}
               </div>
-
+              <div>
+                <Label className="text-base font-medium">Total Amount</Label>
+                <Input
+                  value={
+                    (parseFloat(values.monthlySubscriptionFee) || 0) +
+                    (parseFloat(values.finesPenalty) || 0) +
+                    (parseFloat(values.periodicalDeposit) || 0) +
+                    (parseFloat(values.othersAmount) || 0)
+                  }
+                  disabled
+                  className="mt-1 border-gray-300 bg-amber-600 text-black cursor-not-allowed text-2xl font-extrabold"
+                />
+              </div>
               <div className="col-span-full">
                 <Button
                   type="submit"

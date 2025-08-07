@@ -48,7 +48,7 @@ export default function ResetPasswordPage() {
     if (!values.newPassword) {
       errors.newPassword = "New password is required";
     } else if (
-      !/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}/.test(values.newPassword)
+      !/(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}/.test(values.newPassword)
     ) {
       errors.newPassword =
         "Must contain at least one uppercase, one lowercase letter, and one number";
@@ -106,7 +106,7 @@ export default function ResetPasswordPage() {
             setLoading(true);
             try {
               const res = await fetch(
-                `https://anondolok-backend-v1.vercel.app/api/auth/reset-password`,
+                `http://localhost:5000/api/auth/reset-password`,
                 {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },

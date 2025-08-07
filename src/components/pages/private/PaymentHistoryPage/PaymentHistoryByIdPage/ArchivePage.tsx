@@ -11,15 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { toast } from "sonner";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 
-// ---------- Type Definitions ----------
 type ArchivePayment = {
   name: string;
   username: string;
@@ -43,7 +35,7 @@ const ArchivePaymentSummaryByYear: React.FC<Props> = ({ username }) => {
     const fetchYearlyAnalytics = async () => {
       try {
         const res = await fetch(
-          `https://anondolok-backend-v1.vercel.app/api/archive-payment/user/${username}`
+          `http://localhost:5000/api/archive-payment/user/${username}`
         );
 
         const json = await res.json(); // <-- Read JSON once

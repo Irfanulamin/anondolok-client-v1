@@ -3,6 +3,7 @@ import { useAppSelector } from "@/redux/hook";
 import { RootState } from "@/redux/store";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import AuthWatcher from "./AutoLogOut";
 
 const UserProtectedLayout = ({ children }: { children: React.ReactNode }) => {
   const { role } = useAppSelector((state: RootState) => state.auth);

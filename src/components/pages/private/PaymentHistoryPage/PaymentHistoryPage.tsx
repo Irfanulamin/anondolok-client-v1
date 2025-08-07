@@ -20,7 +20,11 @@ import {
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import YearlyPayments from "./ArchivedPayment/ArchivedPaymentPage";
-
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 const monthNames = [
   "January",
   "February",
@@ -63,7 +67,7 @@ export default function PaymentsTable() {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          `https://anondolok-backend-v1.vercel.app/api/admin-payment/total-payments`
+          `http://localhost:5000/api/admin-payment/total-payments`
         );
         const data = await res.json();
         setDataSet(data); // Do something with the data
@@ -157,7 +161,7 @@ export default function PaymentsTable() {
                                   variant="outline"
                                   className="bg-white text-amber-950"
                                 >
-                                  {payments.length} members
+                                  {payments.length} submissions
                                 </Badge>
                                 <Badge
                                   variant="outline"
@@ -186,19 +190,25 @@ export default function PaymentsTable() {
                                       Monthly Fees
                                     </TableHead>
                                     <TableHead className="text-left text-white">
-                                      Month(s) & Year of Subscription
+                                      Month(s) & Year <br /> of Subscription
                                     </TableHead>
-                                    <TableHead className="text-right text-white">
+                                    <TableHead className="text-left text-white">
+                                      Type Of Submission
+                                    </TableHead>
+                                    <TableHead className="text-left text-white">
                                       Fine/Penalty
                                     </TableHead>
-                                    <TableHead className="text-right text-white">
+                                    <TableHead className="text-left text-white">
                                       Others
                                     </TableHead>
-                                    <TableHead className="text-right text-white">
+                                    <TableHead className="text-left text-white">
                                       Other's Comment
                                     </TableHead>
-                                    <TableHead className="text-right text-white">
+                                    <TableHead className="text-left text-white">
                                       Total Amount
+                                    </TableHead>
+                                    <TableHead className="text-left text-white">
+                                      Date of <br /> Submission
                                     </TableHead>
                                   </TableRow>
                                 </TableHeader>
@@ -231,22 +241,60 @@ export default function PaymentsTable() {
                                           </div>
                                         </TableCell>
                                         <TableCell className="text-left text-base font-medium">
-                                          {payment.totalMonthlyFees}&#2547;
+                                          {payment.monthlySubscriptionFee}{" "}
+                                          &#2547;
                                         </TableCell>
                                         <TableCell className="text-left text-base">
                                           {payment.monthsOfPayment || "N/A"}
                                         </TableCell>
-                                        <TableCell className="text-right text-base font-medium">
-                                          {payment.totalFines}&#2547;
+
+                                        <TableCell className="text-left text-base">
+                                          <Popover>
+                                            <PopoverTrigger asChild>
+                                              <span className="cursor-pointer text-base font-semibold text-white bg-amber-950 hover:bg-white hover:text-amber-950 custom-transition p-2 rounded-lg">
+                                                {payment.typeOfDeposit}
+                                              </span>
+                                            </PopoverTrigger>
+                                            <PopoverContent
+                                              side="right"
+                                              className="w-auto p-2 text-sm bg-white"
+                                            >
+                                              <p className="text-amber-950">
+                                                <span className="font-semibold">
+                                                  Bank Name:
+                                                </span>{" "}
+                                                {payment.bankName}
+                                              </p>
+                                              <p className="text-amber-950">
+                                                <span className="font-semibold">
+                                                  Bank Branch:
+                                                </span>{" "}
+                                                {payment.bankBranch}
+                                              </p>
+                                            </PopoverContent>
+                                          </Popover>
                                         </TableCell>
-                                        <TableCell className="text-right text-base font-medium">
-                                          {payment.totalOthers}&#2547;
+                                        <TableCell className="text-left text-base font-medium">
+                                          {payment.finesPenalty}&#2547;
                                         </TableCell>
-                                        <TableCell className="text-right text-base">
+                                        <TableCell className="text-left text-base font-medium">
+                                          {payment.othersAmount}&#2547;
+                                        </TableCell>
+                                        <TableCell className="text-left text-base">
                                           {payment.othersComment || "N/A"}
                                         </TableCell>
-                                        <TableCell className="text-right text-base font-medium">
+                                        <TableCell className="text-left text-base font-medium">
                                           {payment.totalAmount}&#2547;
+                                        </TableCell>
+                                        <TableCell className="text-left text-base font-medium">
+                                          {new Date(
+                                            payment.dateOfDeposit
+                                          ).toLocaleDateString("en-BD", {
+                                            day: "numeric",
+                                            month: "long",
+                                            year: "numeric",
+                                            timeZone: "Asia/Dhaka",
+                                          })}
                                         </TableCell>
                                       </TableRow>
                                     )
