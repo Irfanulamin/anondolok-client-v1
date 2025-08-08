@@ -204,10 +204,11 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
                 <TableHead className="text-left">
                   Month(s) & Year <br /> of Subscription
                 </TableHead>
+                <TableHead className="text-left">Fines/Penalty</TableHead>
                 <TableHead className="text-left">Type of Deposit</TableHead>
-                <TableHead className="text-left">Fines</TableHead>
-                <TableHead className="text-left">Others</TableHead>
-                <TableHead className="text-left">Other's Comment</TableHead>
+                <TableHead className="text-left">Periodical Deposit</TableHead>
+                <TableHead className="text-left">Others Amount</TableHead>
+                <TableHead className="text-left">Others Comment</TableHead>
                 <TableHead className="text-left">Total Amount</TableHead>
                 <TableHead className="text-left">Actions</TableHead>
               </TableRow>
@@ -244,6 +245,9 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
                   <TableCell className="text-left">
                     {payment.monthsOfPayment || "N/A"}
                   </TableCell>
+                  <TableCell className="text-left">
+                    {payment.finesPenalty}৳
+                  </TableCell>
                   <TableCell className="text-left text-base">
                     <Popover>
                       <PopoverTrigger asChild>
@@ -266,8 +270,9 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
                       </PopoverContent>
                     </Popover>
                   </TableCell>
+
                   <TableCell className="text-left">
-                    {payment.finesPenalty}৳
+                    {payment.periodicalDeposit}৳
                   </TableCell>
                   <TableCell className="text-left">
                     {payment.othersAmount}৳

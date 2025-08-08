@@ -61,6 +61,7 @@ export default function History() {
                 </TableHead>
                 <TableHead className="text-left">Fine/Penalty Amount</TableHead>
                 <TableHead className="text-letf">Type of Deposit</TableHead>
+                <TableHead className="text-left">Periodical Deposit</TableHead>
                 <TableHead className="text-left">Others Amount</TableHead>
                 <TableHead className="text-left">
                   Comment of Others Amount
@@ -118,6 +119,12 @@ export default function History() {
                         </p>
                       </PopoverContent>
                     </Popover>
+                  </TableCell>
+                  <TableCell className="text-left">
+                    {Number.parseInt(
+                      payment.periodicalDeposit
+                    ).toLocaleString()}
+                    ৳
                   </TableCell>
                   <TableCell className="text-left">
                     {Number.parseInt(payment.othersAmount).toLocaleString()}৳
