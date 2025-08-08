@@ -43,6 +43,7 @@ interface AnnualPayment {
   totalMonthlySubscriptionFee: number;
   totalFinesPenalty: number;
   totalOthersAmount: number;
+  totalPeriodicalDeposit: number; // ✅ Added
   totalPaid: number;
 }
 
@@ -63,8 +64,8 @@ export default function AnnualPaymentAnalysis({ data }: any) {
           deposit.monthlySubscriptionFee;
         existingEntry.totalFinesPenalty += deposit.finesPenalty;
         existingEntry.totalOthersAmount += deposit.othersAmount;
+        existingEntry.totalPeriodicalDeposit += deposit.periodicalDeposit; // ✅ Added
         existingEntry.totalPaid += deposit.totalAmount;
-        aggregatedData.set(key, existingEntry);
       } else {
         aggregatedData.set(key, {
           memberId: deposit.memberId,
@@ -73,12 +74,12 @@ export default function AnnualPaymentAnalysis({ data }: any) {
           totalMonthlySubscriptionFee: deposit.monthlySubscriptionFee,
           totalFinesPenalty: deposit.finesPenalty,
           totalOthersAmount: deposit.othersAmount,
+          totalPeriodicalDeposit: deposit.periodicalDeposit, // ✅ Added
           totalPaid: deposit.totalAmount,
         });
       }
     });
 
-    // Sort the data by member name and then by year for consistent display
     const sortedPayments = Array.from(aggregatedData.values()).sort((a, b) => {
       if (a.memberName < b.memberName) return -1;
       if (a.memberName > b.memberName) return 1;
@@ -117,6 +118,9 @@ export default function AnnualPaymentAnalysis({ data }: any) {
                       Fine/Penalty (৳)
                     </TableHead>
                     <TableHead className="text-right text-white text-base font-medium">
+                      Periodical Deposit (৳)
+                    </TableHead>
+                    <TableHead className="text-right text-white text-base font-medium">
                       Others (৳)
                     </TableHead>
                     <TableHead className="text-right text-white text-base font-medium">
@@ -145,6 +149,9 @@ export default function AnnualPaymentAnalysis({ data }: any) {
                       </TableCell>
                       <TableCell className="text-right font-medium text-base">
                         {payment.totalFinesPenalty}৳
+                      </TableCell>
+                      <TableCell className="text-right font-medium text-base">
+                        {payment.totalPeriodicalDeposit}৳
                       </TableCell>
                       <TableCell className="text-right font-medium text-base">
                         {payment.totalOthersAmount}৳
