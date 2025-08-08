@@ -25,6 +25,15 @@ type Props = {
   username: string;
 };
 
+const formatCurrency = (amount: number) => {
+  return new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "BDT",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(amount);
+};
+
 const ArchivePaymentSummaryByYear: React.FC<Props> = ({ username }) => {
   // State now holds a single ArchivePayment object or null
   const [archivePayment, setArchivePayment] = useState<ArchivePayment | null>(
@@ -35,7 +44,7 @@ const ArchivePaymentSummaryByYear: React.FC<Props> = ({ username }) => {
     const fetchYearlyAnalytics = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/archive-payment/user/${username}`
+          `https://anondolok-backend-v1.vercel.app/api/archive-payment/user/${username}`
         );
 
         const json = await res.json(); // <-- Read JSON once
@@ -61,10 +70,21 @@ const ArchivePaymentSummaryByYear: React.FC<Props> = ({ username }) => {
   }, [username]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 mt-12">
       <div>
-        <h3 className="text-2xl font-semibold mb-4 text-gray-800">
-          Archived Monthly Subscription (Year-wise)
+        <h3 className="text-2xl font-semibold mb-4 text-gray-800 flex justify-between items-center">
+          <span>Archived Monthly Subscription (Year-wise)</span>
+          {archivePayment && (
+            <span className="text-lg font-bold bg-red-900 text-white p-2 rounded">
+              Total Amount:{" "}
+              {formatCurrency(
+                Object.values(archivePayment.yearly_payments).reduce(
+                  (acc, val) => acc + val,
+                  0
+                )
+              )}
+            </span>
+          )}
         </h3>
         {archivePayment ? (
           <div className="overflow-x-auto rounded-lg">
@@ -90,8 +110,7 @@ const ArchivePaymentSummaryByYear: React.FC<Props> = ({ username }) => {
                         {year}
                       </TableCell>
                       <TableCell className="text-right font-medium text-base">
-                        {amount}
-                        &#2547;
+                        {amount}৳
                       </TableCell>
                     </TableRow>
                   )
@@ -103,9 +122,21 @@ const ArchivePaymentSummaryByYear: React.FC<Props> = ({ username }) => {
           <p>Data not found!</p>
         )}
       </div>
+
       <div>
-        <h3 className="text-2xl font-semibold mb-4 text-gray-800">
-          Archived Periodical Deposit
+        <h3 className="text-2xl font-semibold mb-4 text-gray-800 flex justify-between items-center">
+          <span>Archived Periodical Deposit</span>
+          {archivePayment && (
+            <span className="text-lg font-bold bg-red-900 text-white p-2 rounded">
+              Total Amount:{" "}
+              {formatCurrency(
+                Object.values(archivePayment.periodical_deposits).reduce(
+                  (acc, val) => acc + val,
+                  0
+                )
+              )}
+            </span>
+          )}
         </h3>
         {archivePayment ? (
           <div className="overflow-x-auto rounded-lg">
@@ -113,7 +144,7 @@ const ArchivePaymentSummaryByYear: React.FC<Props> = ({ username }) => {
               <TableHeader className="bg-red-900/90">
                 <TableRow className="rounded-t-3xl">
                   <TableHead className="text-white font-medium text-base">
-                    Year
+                    Period
                   </TableHead>
                   <TableHead className="text-right text-white font-medium text-base">
                     Amount
@@ -131,8 +162,7 @@ const ArchivePaymentSummaryByYear: React.FC<Props> = ({ username }) => {
                         {period}
                       </TableCell>
                       <TableCell className="text-right font-medium text-base">
-                        {amount}
-                        &#2547;
+                        {amount}৳
                       </TableCell>
                     </TableRow>
                   )

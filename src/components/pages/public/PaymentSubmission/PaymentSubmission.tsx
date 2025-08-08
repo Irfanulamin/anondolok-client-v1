@@ -193,7 +193,7 @@ export default function MemberDepositForm() {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/payment/make-payment`,
+        `https://anondolok-backend-v1.vercel.app/api/payment/make-payment`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -201,7 +201,7 @@ export default function MemberDepositForm() {
         }
       );
       const result = await res.json();
-      if (!result.success) toast.error(result.message || "Submission failed");
+      if (!result.success) toast.error(result.message || "Deposit failed");
       else {
         toast.success("Deposit submitted successfully");
         resetForm();
@@ -214,7 +214,6 @@ export default function MemberDepositForm() {
 
   const numericInputProps = {
     min: 0,
-    step: 100,
     onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (["e", "E", "+", "-"].includes(e.key)) e.preventDefault();
     },

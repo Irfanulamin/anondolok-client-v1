@@ -12,9 +12,12 @@ export default function PaymentHistoryPageClient() {
   useEffect(() => {
     if (!id) return;
 
-    fetch(`http://localhost:5000/api/payment/payment-history/${id}`, {
-      cache: "no-store",
-    })
+    fetch(
+      `https://anondolok-backend-v1.vercel.app/api/payment/payment-history/${id}`,
+      {
+        cache: "no-store",
+      }
+    )
       .then((res) => res.json())
       .then((data) => setPayments(data.payments || []));
   }, [id]);

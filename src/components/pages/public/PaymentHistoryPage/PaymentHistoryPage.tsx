@@ -24,7 +24,7 @@ export default function History() {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/payment/payment-history/${username}`
+          `https://anondolok-backend-v1.vercel.app/api/payment/payment-history/${username}`
         );
         const result = await res.json();
         setData(result);
@@ -54,19 +54,19 @@ export default function History() {
                 <TableHead className="text-left">Member ID</TableHead>
                 <TableHead className="text-left">Member Name</TableHead>
                 <TableHead className="text-left">
-                  Monthly Subscripyion
+                  Monthly Subscription
                 </TableHead>
                 <TableHead className="text-left">
                   Month(s) & Year of Subscription
                 </TableHead>
                 <TableHead className="text-left">Fine/Penalty Amount</TableHead>
-                <TableHead className="text-letf">Type of Submission</TableHead>
+                <TableHead className="text-letf">Type of Deposit</TableHead>
                 <TableHead className="text-left">Others Amount</TableHead>
                 <TableHead className="text-left">
                   Comment of Others Amount
                 </TableHead>
                 <TableHead className="text-left">Total Amount</TableHead>
-                <TableHead className="text-left">Date of Submission</TableHead>
+                <TableHead className="text-left">Date of Deposit</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -106,7 +106,7 @@ export default function History() {
                       </PopoverTrigger>
                       <PopoverContent
                         side="right"
-                        className="w-auto p-2 text-sm bg-white"
+                        className="w-auto p-2 text-sm bg-white border border-slate-950"
                       >
                         <p className="text-slate-950">
                           <span className="font-semibold">Bank Name:</span>{" "}

@@ -4,7 +4,7 @@ const nextConfig = {
   images: {
     unoptimized: true, // Needed if using <Image> without next/image loader
   },
-  // output: "export", // <- Add this line for static export
+  //output: "export", // <- Add this line for static export
   //distDir: "out", // Output directory for cPanel public_html
 };
 

@@ -106,7 +106,7 @@ export default function ResetPasswordPage() {
             setLoading(true);
             try {
               const res = await fetch(
-                `http://localhost:5000/api/auth/reset-password`,
+                `https://anondolok-backend-v1.vercel.app/api/auth/reset-password`,
                 {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },

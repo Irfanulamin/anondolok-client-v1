@@ -67,7 +67,7 @@ export default function PaymentsTable() {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/admin-payment/total-payments`
+          `https://anondolok-backend-v1.vercel.app/api/admin-payment/total-payments`
         );
         const data = await res.json();
         setDataSet(data); // Do something with the data
@@ -193,7 +193,7 @@ export default function PaymentsTable() {
                                       Month(s) & Year <br /> of Subscription
                                     </TableHead>
                                     <TableHead className="text-left text-white">
-                                      Type Of Submission
+                                      Type Of Deposit
                                     </TableHead>
                                     <TableHead className="text-left text-white">
                                       Fine/Penalty
@@ -208,7 +208,7 @@ export default function PaymentsTable() {
                                       Total Amount
                                     </TableHead>
                                     <TableHead className="text-left text-white">
-                                      Date of <br /> Submission
+                                      Date of <br /> Deposit
                                     </TableHead>
                                   </TableRow>
                                 </TableHeader>

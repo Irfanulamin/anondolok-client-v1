@@ -74,7 +74,7 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
   const handleDelete = async (id: string) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/payment/delete-payment/${id}`,
+        `https://anondolok-backend-v1.vercel.app/api/payment/delete-payment/${id}`,
         {
           method: "DELETE",
         }
@@ -137,7 +137,7 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/payment/update-payment`,
+          `https://anondolok-backend-v1.vercel.app/api/payment/update-payment`,
           {
             method: "PUT",
             headers: {
@@ -204,7 +204,7 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
                 <TableHead className="text-left">
                   Month(s) & Year <br /> of Subscription
                 </TableHead>
-                <TableHead className="text-left">Type of Submission</TableHead>
+                <TableHead className="text-left">Type of Deposit</TableHead>
                 <TableHead className="text-left">Fines</TableHead>
                 <TableHead className="text-left">Others</TableHead>
                 <TableHead className="text-left">Other's Comment</TableHead>
@@ -314,7 +314,7 @@ const PaymentHistoryByIdPage = ({ id, payments: initialPayments }: Props) => {
                                 name: "memberName",
                               },
                               {
-                                label: "Type Of Submission",
+                                label: "Type Of Deposit",
                                 name: "typeOfDeposit",
                               },
                               {

@@ -1,12 +1,5 @@
 "use client";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -28,7 +21,7 @@ const LifetimePayment = ({ username }: { username: string }) => {
     const fetchPaymentData = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/archive-payment/lifetime/${username}`
+          `https://anondolok-backend-v1.vercel.app/api/archive-payment/lifetime/${username}`
         );
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
