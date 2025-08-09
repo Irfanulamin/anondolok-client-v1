@@ -193,10 +193,13 @@ export default function PaymentsTable() {
                                       Month(s) & Year <br /> of Subscription
                                     </TableHead>
                                     <TableHead className="text-left text-white">
+                                      Fine/Penalty
+                                    </TableHead>
+                                    <TableHead className="text-left text-white">
                                       Type Of Deposit
                                     </TableHead>
                                     <TableHead className="text-left text-white">
-                                      Fine/Penalty
+                                      Periodical Deposit
                                     </TableHead>
                                     <TableHead className="text-left text-white">
                                       Others
@@ -247,7 +250,9 @@ export default function PaymentsTable() {
                                         <TableCell className="text-left text-base">
                                           {payment.monthsOfPayment || "N/A"}
                                         </TableCell>
-
+                                        <TableCell className="text-left text-base font-medium">
+                                          {payment.finesPenalty}&#2547;
+                                        </TableCell>
                                         <TableCell className="text-left text-base">
                                           <Popover>
                                             <PopoverTrigger asChild>
@@ -275,7 +280,7 @@ export default function PaymentsTable() {
                                           </Popover>
                                         </TableCell>
                                         <TableCell className="text-left text-base font-medium">
-                                          {payment.finesPenalty}&#2547;
+                                          {payment.periodicalDeposit}&#2547;
                                         </TableCell>
                                         <TableCell className="text-left text-base font-medium">
                                           {payment.othersAmount}&#2547;
